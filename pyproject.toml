@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "webmeta"
+version = "0.1.0"
+description = "Language, country and register metadata for web data (FIN-CLARIAH D3.3.3 a)"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = []
+
+[project.optional-dependencies]
+zst = ["zstandard"]
+tables = ["pandas", "pyarrow"]
+hf = ["datasets"]
+all = ["zstandard", "pandas", "pyarrow", "datasets"]
+dev = ["pytest"]
+
+[project.scripts]
+webmeta = "webmeta.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
