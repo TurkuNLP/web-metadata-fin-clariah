@@ -29,13 +29,15 @@
 
 <!-- TODO: draft text, not yet reviewed. Keep within 3000 characters. -->
 
-Web-crawled datasets are among the largest text resources available to SSH research, but they are noisy and carry little metadata, which makes it hard to find the material a research question needs. In this deliverable we publish *webmeta*, a pipeline that selects documents from web data by three kinds of metadata: **language**, **country** and **register** (text variety, such as *news report* or *opinion blog*).
+Web-crawled datasets are among the largest text resources available to SSH research, but they are noisy and carry little metadata, which makes it hard to find the material a research question needs.
+
+*webmeta* turns a large web corpus into research datasets. It reads corpus metadata (register labels, language, country) and lets a researcher describe the subsample they want: which documents qualify, how to stratify, how large a subsample. The package then produces that subsample reproducibly. This makes each study just a set of settings for the tool, so a single corpus can serve many research projects without new code.
 
 * **Language:** documents are selected by their main language, and multilingual documents can be targeted using segment-level language identification.
 * **Country:** a country signal is derived from the document's top-level domain, so that, for example, Swedish written in Finland can be separated from Swedish written in Sweden.
 * **Register:** documents are selected by the 25-class web register taxonomy of Skantsi and Laippala (2023), including hybrid documents that combine registers.
 
-The pipeline runs on HPLT 4, whose documents already carry language identification and register probabilities for 92 languages, and scales from a single file to the full corpus on the LUMI supercomputer. A Google Colab tutorial lets users try it on a multilingual demo sample, or on their own small corpus, without installing anything.
+The repository is a Python package, `webmeta`, used in three ways. On LUMI, it runs from the command line as batch jobs over large corpus samples. The Colab demo notebook in the repo can be used standalone, where the package is installed straight from the repository and runs end to end on a small demo dataset. The package can also be imported by a researcher's own study code. It reads two kinds of input: validated HPLT 4 samples drawn by TurkuNLP's HPLT sampler, or a user's own corpus in CSV or JSONL, with its fields mapped onto field names used by the package. HPLT 4 documents already carry language identification and register probabilities for 92 languages. This README doubles as the report for Fin-CLARIAH deliverable D3.3.3 (a).
 
 TODO: references; links; events (FIN-CLARIAH meeting poster, 9 Nov 2026).
 
