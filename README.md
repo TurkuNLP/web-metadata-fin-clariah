@@ -78,9 +78,8 @@ On LUMI, webmeta runs on validated samples published by `hplt-sampler`, not on r
 | `country` | ISO 3166-1 codes from the top-level domain; generic domains give no country |
 | `register` | register labels; a document matches if it has any of them |
 | `hybrid` | `True`: only documents with two or more main registers |
-| `exclude` | labels that disqualify a document; default `("MT",)`, machine-translated text |
+| `exclude` | register labels that disqualify a document, e.g. `("MT",)`; default none |
 | `threshold` | register probability needed for a label; default: the register model's per-language value (English 0.40, Finnish 0.45, …) |
-| `min_words` | keep documents with at least this many words |
 
 Every kept document gets a `meta` field with what webmeta derived; source fields are left untouched.
 

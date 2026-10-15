@@ -19,9 +19,10 @@ def test_swedish_from_finland():
     assert ids(webmeta.run(hplt(), adapter="hplt4", lang="sv", country="FI")) == ["fx-2"]
 
 
-def test_register_filter_and_mt_exclusion():
+def test_register_filter_and_exclusion():
     assert ids(webmeta.run(hplt(), adapter="hplt4", register="NA")) == ["fx-1", "fx-2"]
-    assert "fx-6" not in ids(webmeta.run(hplt(), adapter="hplt4"))
+    assert "fx-6" in ids(webmeta.run(hplt(), adapter="hplt4"))
+    assert "fx-6" not in ids(webmeta.run(hplt(), adapter="hplt4", exclude=("MT",)))
 
 
 def test_multilingual_targeting():
@@ -68,18 +69,10 @@ def test_cli(tmp_path):
     assert len(out.read_text().splitlines()) == 2
 
 
-def test_min_words_and_level():
-    recs = [{"id": "a", "text": "one two three", "doc_scores": [0.73]},
-            {"id": "b", "text": " ".join(["w"] * 600), "doc_scores": [1.0]}]
-    out = list(webmeta.run(recs, adapter="hplt4", min_words=500))
-    assert ids(out) == ["b"] and out[0]["level"] == 10
-    assert webmeta.from_hplt4(recs[0])["level"] == 7
-
-
 def test_cli_count(tmp_path):
     from webmeta.cli import main
     out = tmp_path / "counts.tsv"
-    main(["count", str(FX / "hplt4_like.jsonl"), "--by", "lang,category_label", "-o", str(out)])
+    main(["count", str(FX / "hplt4_like.jsonl"), "--by", "lang,registers", "-o", str(out)])
     rows = out.read_text().splitlines()
-    assert rows[0] == "lang\tcategory_label\tn"
+    assert rows[0] == "lang\tregisters\tn"
     assert "swe\tre\t1" in rows

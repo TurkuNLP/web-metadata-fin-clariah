@@ -7,7 +7,7 @@
 # fetches one sample to scratch (once) and runs a webmeta command on it.
 #
 #   SAMPLE=v4/eng_Latn/all-n1000000-s20261015 \
-#   WEBMETA_CMD="count --by category_label,level --min-words 500 -o out/eng_counts.tsv" \
+#   WEBMETA_CMD="count --by lang,registers -o out/eng_registers.tsv" \
 #   sbatch lumi/run_sample.sh
 #
 #SBATCH --job-name=webmeta

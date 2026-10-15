@@ -39,16 +39,6 @@ def test_per_language_threshold():
     assert register.annotate({"lang": "fin", "register": probs})["registers"] == []
 
 
-def test_categories():
-    assert register.category(["NA", "ne"]) == ("single", "ne")
-    assert register.category(["NA"]) == ("single", "NA")
-    assert register.category(["NA", "OP", "ob"]) == ("hybrid", "NA+OP+ob")
-    assert register.category(["NA", "ne", "sr"]) == ("hybrid", "NA+ne+sr")  # two subregisters
-    assert register.category([]) == ("none", None)
-    assert register.category(["MT", "NA"]) == ("mt", None)
-
-
-def test_mt_excluded_by_default():
-    meta = register.annotate({"register": {"MT": 0.9}})
-    assert not register.matches(meta)
-    assert register.matches(meta, exclude=())
+def test_hybrid_is_two_main_registers():
+    assert register.annotate({"register": {"NA": 0.9, "OP": 0.8}}, 0.4)["hybrid"]
+    assert not register.annotate({"register": {"NA": 0.9, "ne": 0.8, "sr": 0.7}}, 0.4)["hybrid"]

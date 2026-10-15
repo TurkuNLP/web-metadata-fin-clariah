@@ -107,16 +107,8 @@ def from_hplt4(raw):
         "seg_langs": _seg_langs(raw.get("seg_langs_openlid_v3")),
         "register": raw.get("web-register"),
         "ts": raw.get("ts"),
-        "level": _level(raw.get("doc_scores")),
     }
 
-
-def _level(scores):
-    """HPLT 4 quality level: floor(10 x document score), the shard's Q (0-10)."""
-    try:
-        return int(float(scores[0]) * 10 + 1e-9)
-    except (TypeError, ValueError, IndexError, KeyError):
-        return None
 
 
 def from_mapping(raw, mapping):

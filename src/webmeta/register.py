@@ -1,4 +1,4 @@
-"""Register step: labels, hybrids and categories from register probabilities.
+"""Register step: labels and hybrids from register probabilities.
 
 First version. Works on the 25-class TurkuNLP web
 register taxonomy: 9 main registers and 16 subregisters. A label is assigned
@@ -61,45 +61,20 @@ def labels(probs, threshold=DEFAULT_THRESHOLD):
     return mains + subs
 
 
-def category(found):
-    """Classify a label set (from ``labels``) as one of:
-
-    ("mt", None)          machine translated
-    ("none", None)        nothing above threshold
-    ("single", label)     one register: its subregister if it has one (NA + ne -> "ne"),
-                          else the main register alone ("NA", that register's "other")
-    ("hybrid", "NA+ob")   labels from two or more main registers, or two or more
-                          subregisters under one main register (NA + ne + sr)
-
-    Category rules follow a register-variation study design; to be confirmed.
-    Open: whether a hybrid that also carries MT is excluded (here it is "mt").
-    """
-    if "MT" in found:
-        return ("mt", None)
-    mains = [l for l in found if l in MAIN]
-    subs = [l for l in found if l in PARENT]
-    if not mains:
-        return ("none", None)
-    if len(mains) >= 2 or len(subs) >= 2:
-        return ("hybrid", "+".join(found))
-    return ("single", subs[0] if subs else mains[0])
-
-
 def annotate(record, threshold=None):
     """threshold None = the model card's value for the record's language."""
     t = threshold_for(record.get("lang")) if threshold is None else threshold
     found = labels(record.get("register"), t)
-    kind, label = category(found)
-    return {"registers": found, "hybrid": kind == "hybrid", "category": kind,
-            "category_label": label, "threshold": t}
+    mains = [l for l in found if l in MAIN]
+    return {"registers": found, "hybrid": len(mains) >= 2, "threshold": t}
 
 
-def matches(meta, register=None, hybrid=None, exclude=("MT",)):
+def matches(meta, register=None, hybrid=None, exclude=()):
     """Does an annotated record pass the register filter?
 
     register  a label or list of labels; the record passes if it has any of them
-    hybrid    True = only hybrids, False = only non-hybrids
-    exclude   labels that disqualify a record (default: machine-translated text)
+    hybrid    True = only hybrids (two or more main registers), False = only non-hybrids
+    exclude   labels that disqualify a record, e.g. ("MT",); default none
     """
     have = set(meta["registers"])
     if exclude and have & set(exclude):

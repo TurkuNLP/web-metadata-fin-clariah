@@ -23,25 +23,19 @@ def annotate(record, threshold=None):
     threshold None = the register model's per-language value.
     """
     gone = schema.missing_fields(record)
-    meta = {"words": len((record.get("text") or "").split())}
+    meta = {}
     meta.update(_language.annotate(record) if "language" not in gone
                 else {"lang": None, "languages": [], "multilingual": False})
     meta.update(_country.annotate(record) if "country" not in gone
                 else {"tld": None, "country": None})
     meta.update(_register.annotate(record, threshold) if "register" not in gone
-                else {"registers": [], "hybrid": False, "category": None,
-                      "category_label": None, "threshold": None})
+                else {"registers": [], "hybrid": False, "threshold": None})
     return {**record, "meta": meta}
 
 
 def select(meta, lang=None, multilingual=None, any_segment=False,
-           country=None, register=None, hybrid=None, exclude=("MT",), min_words=None):
-    """True if an annotated record's ``meta`` passes every filter given.
-
-    min_words  keep documents with at least this many whitespace-separated words
-    """
-    if min_words is not None and meta["words"] < min_words:
-        return False
+           country=None, register=None, hybrid=None, exclude=()):
+    """True if an annotated record's ``meta`` passes every filter given."""
     return (_language.matches(meta, lang, multilingual, any_segment)
             and _country.matches(meta, country)
             and _register.matches(meta, register, hybrid, exclude))
@@ -76,10 +70,10 @@ def run(records, adapter="contract", threshold=None,
 
 
 def summary(records, by=("lang", "country")):
-    """Count annotated records by meta fields (e.g. ("category_label", "level")).
+    """Count annotated records by meta fields, e.g. ("lang", "country").
 
     "registers" is counted once per label. Fields not in ``meta`` are read from
-    the record itself, so source fields such as ``level`` can be used.
+    the record itself.
     """
     from collections import Counter
     c = Counter()

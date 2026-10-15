@@ -26,20 +26,18 @@ def main(argv=None):
     r.add_argument("--country", type=_list, help="comma-separated ISO country codes")
     r.add_argument("--register", type=_list, help="comma-separated register labels")
     r.add_argument("--hybrid", choices=["yes", "no"])
-    r.add_argument("--keep-mt", action="store_true", help="keep machine-translated (MT) documents")
+    r.add_argument("--exclude", type=_list, help="comma-separated register labels that disqualify a document, e.g. MT")
     r.add_argument("--threshold", type=float, help="register threshold; default: the model's per-language value")
-    r.add_argument("--min-words", type=int, help="keep documents with at least this many words")
     r.add_argument("--limit", type=int)
     r.add_argument("--strict", action="store_true")
 
     k = sub.add_parser("count", help="count kept documents by meta fields, as TSV")
     k.add_argument("inputs", nargs="+")
     k.add_argument("--adapter", default="hplt4", choices=sorted(io.ADAPTERS))
-    k.add_argument("--by", type=_list, default=["category_label", "level"],
-                   help="comma-separated fields (default: category_label,level)")
+    k.add_argument("--by", type=_list, default=["lang", "country"],
+                   help="comma-separated meta fields, e.g. lang,country,registers (default: lang,country)")
     k.add_argument("--threshold", type=float)
-    k.add_argument("--min-words", type=int)
-    k.add_argument("--keep-mt", action="store_true")
+    k.add_argument("--exclude", type=_list)
     k.add_argument("-o", "--out", help="TSV file (default: stdout)")
 
     c = sub.add_parser("check", help="count how many records can run each step")
@@ -61,7 +59,7 @@ def main(argv=None):
 
     if a.cmd == "count":
         kept = pipeline.run(raw, adapter=a.adapter, threshold=a.threshold,
-                            min_words=a.min_words, exclude=() if a.keep_mt else ("MT",))
+                            exclude=a.exclude or ())
         counts = pipeline.summary(kept, by=tuple(a.by))
         fh = open(a.out, "w") if a.out else sys.stdout
         fh.write("\t".join([*a.by, "n"]) + "\n")
@@ -74,8 +72,7 @@ def main(argv=None):
     out = pipeline.run(raw, adapter=a.adapter, threshold=a.threshold, limit=a.limit,
                        strict=a.strict, lang=a.lang, any_segment=a.any_segment,
                        multilingual=yn[a.multilingual], country=a.country,
-                       register=a.register, hybrid=yn[a.hybrid], min_words=a.min_words,
-                       exclude=() if a.keep_mt else ("MT",))
+                       register=a.register, hybrid=yn[a.hybrid], exclude=a.exclude or ())
     n = io.write(out, a.out)
     print(f"wrote {n} records to {a.out}", file=sys.stderr)
     return 0
