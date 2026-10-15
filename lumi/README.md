@@ -11,10 +11,10 @@ and counts are webmeta's.
 ## Setup (once per clone)
 ```bash
 cd <clone>
-/usr/bin/python3 -m venv .venv
+/usr/bin/python3.11 -m venv .venv
 .venv/bin/pip install -e ".[zst]"
 ```
-Use **`/usr/bin/python3`**, not the CSC AI module's `python3`, which runs in a container
+Use **`/usr/bin/python3.11`** (plain `/usr/bin/python3` is 3.6, too old for webmeta), not the CSC AI module's `python3`, which runs in a container
 that cannot see parts of `/appl/local`. `rclone` is not on `PATH` in batch jobs;
 `run_sample.sh` uses its absolute path (or `module load lumio`).
 
