@@ -97,9 +97,14 @@ HPLT4_LANG_FIELDS = ("openlid_v3", "openlid_v2", "glotlid_v3")
 
 
 def from_hplt4(raw):
-    """HPLT 4 record -> contract record. Field names per the HPLT 4 release on LUMI."""
+    """HPLT 4 record -> contract record. Field names per the HPLT 4 release on LUMI.
+
+    The source fields are kept alongside (e.g. ``doc_scores``), so settings can
+    derive values from them.
+    """
     lang = next((l for l in (_top_label(raw.get(f)) for f in HPLT4_LANG_FIELDS) if l), None)
     return {
+        **raw,
         "id": raw.get("id"),
         "text": raw.get("text"),
         "url": raw.get("u"),

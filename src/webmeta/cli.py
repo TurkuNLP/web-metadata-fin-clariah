@@ -1,11 +1,11 @@
-"""Command line: ``webmeta run`` filters, ``webmeta count`` tabulates, ``webmeta check`` reports what a corpus supports."""
+"""Command line: ``webmeta run`` filters, ``webmeta count`` tabulates, ``webmeta build`` makes a dataset from a settings file, ``webmeta check`` reports what a corpus supports."""
 
 import argparse
 import itertools
 import json
 import sys
 
-from . import io, pipeline, schema
+from . import io, pipeline, schema, subsample
 
 
 def _list(value):
@@ -40,6 +40,14 @@ def main(argv=None):
     k.add_argument("--exclude", type=_list)
     k.add_argument("-o", "--out", help="TSV file (default: stdout)")
 
+    b = sub.add_parser("build", help="build a dataset from a study's settings file")
+    b.add_argument("inputs", nargs="+")
+    b.add_argument("--settings", required=True,
+                   help="Python file defining SETTINGS (see webmeta.subsample) and optionally EXPORT")
+    b.add_argument("-o", "--out", required=True, help="output directory")
+    b.add_argument("--counts-only", action="store_true",
+                   help="only count the cells (n = 0): writes cells.tsv")
+
     c = sub.add_parser("check", help="count how many records can run each step")
     c.add_argument("input")
     c.add_argument("--adapter", default="hplt4", choices=sorted(io.ADAPTERS))
@@ -56,6 +64,23 @@ def main(argv=None):
         return 0
 
     raw = itertools.chain.from_iterable(io.read(i) for i in a.inputs)
+
+    if a.cmd == "build":
+        study = _load(a.settings)
+        settings = dict(study.SETTINGS)
+        if a.counts_only:
+            settings["n"] = 0
+        sample = subsample.build(raw, settings)
+        if a.counts_only:
+            from pathlib import Path
+            Path(a.out).mkdir(parents=True, exist_ok=True)
+            subsample.write_counts(sample, f"{a.out}/cells.tsv")
+            print(f"counted {sum(sample.population.values())} documents in "
+                  f"{len(sample.population)} cells -> {a.out}/cells.tsv", file=sys.stderr)
+        else:
+            n = subsample.export(sample, a.out, **getattr(study, "EXPORT", {}))
+            print(f"wrote {n} documents to {a.out}", file=sys.stderr)
+        return 0
 
     if a.cmd == "count":
         kept = pipeline.run(raw, adapter=a.adapter, threshold=a.threshold,
@@ -76,6 +101,15 @@ def main(argv=None):
     n = io.write(out, a.out)
     print(f"wrote {n} records to {a.out}", file=sys.stderr)
     return 0
+
+
+def _load(path):
+    """Import a settings file as a module."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("webmeta_settings", path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
 
 
 if __name__ == "__main__":
