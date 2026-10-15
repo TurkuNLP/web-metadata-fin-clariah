@@ -6,3 +6,5 @@ build/
 dist/
 out/
 notebooks/webmeta_selection.jsonl
+samples/
+logs/
