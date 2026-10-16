@@ -130,10 +130,12 @@ def build(records, settings):
 # ------------------------------------------------------------------- export
 
 def export(sample, outdir, name="{id}", text_field="text", columns=("id",),
-           texts=True):
+           texts=True, dirs=None):
     """Write a Sample as one .txt per document plus ``documents.tsv`` and ``cells.tsv``.
 
     name     filename template, filled from meta and record fields, e.g. "{id}_{category}_{level}"
+    dirs     subdirectory template, e.g. "{level}/{category}"; None = all files at the top.
+             Large flat directories are slow on shared file systems such as Lustre.
     columns  fields for documents.tsv; a dict-valued field (e.g. ``register``)
              becomes one column per key, ``register.NA`` ...
     texts    False = tables only
@@ -153,6 +155,10 @@ def export(sample, outdir, name="{id}", text_field="text", columns=("id",),
                 row[col] = json.dumps(v, ensure_ascii=False) if isinstance(v, (list, tuple)) else v
         if texts:
             fname = _filename(name, r)
+            if dirs:
+                sub = Path(*[_safe(p) for p in _fill(dirs, r).split("/") if p])
+                (out / sub).mkdir(parents=True, exist_ok=True)
+                fname = str(sub / fname)
             row["file"] = fname
             (out / fname).write_text(value(r, text_field) or "", encoding="utf-8")
         rows.append(row)
@@ -171,10 +177,17 @@ def write_counts(sample, path):
     _write_tsv(path, [*sample.strata, "population", "taken"], sample.table())
 
 
-def _filename(template, record):
+def _fill(template, record):
     fields = {**{k: v for k, v in record.items() if k != "meta"}, **(record.get("meta") or {})}
-    stem = template.format_map(_Blank(fields))
-    return "".join(ch if ch.isalnum() or ch in "-_." else "-" for ch in stem) + ".txt"
+    return template.format_map(_Blank(fields))
+
+
+def _safe(stem):
+    return "".join(ch if ch.isalnum() or ch in "-_.+" else "-" for ch in stem) or "-"
+
+
+def _filename(template, record):
+    return _safe(_fill(template, record)) + ".txt"
 
 
 class _Blank(dict):

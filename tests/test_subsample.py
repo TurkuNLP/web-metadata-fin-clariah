@@ -80,3 +80,13 @@ def test_cli_build(tmp_path):
                  "--counts-only"]) == 0
     lines = (tmp_path / "c" / "cells.tsv").read_text().splitlines()
     assert lines[0] == "lang\tpopulation\ttaken" and len(lines) > 1
+
+
+def test_export_into_subdirectories(tmp_path):
+    s = webmeta.stratify(docs(60), strata=("lang", "level"), n=2, seed=0)
+    n = webmeta.export(s, tmp_path / "o", name="{id}", dirs="{level}/{lang}",
+                       columns=("id", "lang", "level"))
+    files = sorted(p.relative_to(tmp_path / "o").as_posix() for p in (tmp_path / "o").rglob("*.txt"))
+    assert len(files) == n == 12 and all(f.count("/") == 2 for f in files)
+    rows = (tmp_path / "o" / "documents.tsv").read_text().splitlines()[1:]
+    assert sorted(r.split("\t")[-1] for r in rows) == files
