@@ -59,7 +59,7 @@ def test_build_settings_on_hplt4(tmp_path):
     }
     s = webmeta.build(webmeta.read(fx), settings)
     assert len(s) == len(s.cells) > 0
-    n = webmeta.export(s, tmp_path / "out", name="{id}_{main}",
+    n = webmeta.export(s, tmp_path / "out", format="txt", name="{id}_{main}",
                        columns=("id", "lang", "main", "register"))
     assert n == len(s)
     header = (tmp_path / "out" / "documents.tsv").read_text().splitlines()[0].split("\t")
@@ -74,7 +74,7 @@ def test_cli_build(tmp_path):
     fx = Path(__file__).parent / "fixtures" / "hplt4_like.jsonl"
     st = tmp_path / "study.py"
     st.write_text('SETTINGS = {"adapter": "hplt4", "strata": ("lang",), "n": 1}\n'
-                  'EXPORT = {"name": "{id}_{lang}", "columns": ("id", "lang")}\n')
+                  'EXPORT = {"format": "txt", "name": "{id}_{lang}", "columns": ("id", "lang")}\n')
     assert main(["build", str(fx), "--settings", str(st), "-o", str(tmp_path / "o")]) == 0
     assert main(["build", str(fx), "--settings", str(st), "-o", str(tmp_path / "c"),
                  "--counts-only"]) == 0
@@ -84,9 +84,49 @@ def test_cli_build(tmp_path):
 
 def test_export_into_subdirectories(tmp_path):
     s = webmeta.stratify(docs(60), strata=("lang", "level"), n=2, seed=0)
-    n = webmeta.export(s, tmp_path / "o", name="{id}", dirs="{level}/{lang}",
+    n = webmeta.export(s, tmp_path / "o", format="txt", name="{id}", dirs="{level}/{lang}",
                        columns=("id", "lang", "level"))
     files = sorted(p.relative_to(tmp_path / "o").as_posix() for p in (tmp_path / "o").rglob("*.txt"))
     assert len(files) == n == 12 and all(f.count("/") == 2 for f in files)
     rows = (tmp_path / "o" / "documents.tsv").read_text().splitlines()[1:]
     assert sorted(r.split("\t")[-1] for r in rows) == files
+
+
+def test_export_jsonl_is_the_default_and_keeps_meta(tmp_path):
+    import json
+    s = webmeta.stratify(docs(60), strata=("lang",), n=5, seed=0)
+    n = webmeta.export(s, tmp_path / "o")
+    lines = (tmp_path / "o" / "documents.jsonl").read_text().splitlines()
+    assert n == len(lines) == 10
+    rec = json.loads(lines[0])
+    assert rec["meta"]["lang"] in ("fin", "swe") and "text" in rec
+    assert (tmp_path / "o" / "cells.tsv").exists() and not (tmp_path / "o" / "documents.tsv").exists()
+    webmeta.export(s, tmp_path / "f", fields=("id",))
+    assert set(json.loads((tmp_path / "f" / "documents.jsonl").read_text().splitlines()[0])) == {"id", "meta"}
+
+
+def test_export_jsonl_one_file_per_folder(tmp_path):
+    s = webmeta.stratify(docs(60), strata=("lang", "level"), n=2, seed=0)
+    webmeta.export(s, tmp_path / "o", dirs="{lang}")
+    files = sorted(p.relative_to(tmp_path / "o").as_posix() for p in (tmp_path / "o").rglob("*.jsonl"))
+    assert files == ["fin/documents.jsonl", "swe/documents.jsonl"]
+
+
+def test_export_csv_and_parquet(tmp_path):
+    import csv
+    import pytest
+    s = webmeta.stratify(docs(60), strata=("lang",), n=3, seed=0)
+    webmeta.export(s, tmp_path / "c", format="csv", columns=("id", "lang"))
+    rows = list(csv.DictReader(open(tmp_path / "c" / "documents.csv")))
+    assert len(rows) == 6 and list(rows[0]) == ["id", "lang", "text"]
+    pd = pytest.importorskip("pandas")
+    pytest.importorskip("pyarrow")
+    webmeta.export(s, tmp_path / "p", format="parquet", columns=("id", "lang"))
+    assert len(pd.read_parquet(tmp_path / "p" / "documents.parquet")) == 6
+
+
+def test_export_rejects_unknown_format(tmp_path):
+    import pytest
+    s = webmeta.stratify(docs(10), n=1)
+    with pytest.raises(ValueError):
+        webmeta.export(s, tmp_path / "o", format="docx")

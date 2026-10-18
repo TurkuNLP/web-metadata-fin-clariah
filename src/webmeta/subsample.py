@@ -129,47 +129,84 @@ def build(records, settings):
 
 # ------------------------------------------------------------------- export
 
-def export(sample, outdir, name="{id}", text_field="text", columns=("id",),
-           texts=True, dirs=None):
-    """Write a Sample as one .txt per document plus ``documents.tsv`` and ``cells.tsv``.
+FORMATS = ("jsonl", "txt", "csv", "parquet")
 
-    name     filename template, filled from meta and record fields, e.g. "{id}_{category}_{level}"
-    dirs     subdirectory template, e.g. "{level}/{category}"; None = all files at the top.
+
+def export(sample, outdir, format="jsonl", dirs=None, columns=("id",), fields=None,
+           name="{id}", text_field="text"):
+    """Write a Sample to ``outdir`` in the chosen format, plus ``cells.tsv``.
+
+    format   "jsonl"    full records with webmeta's ``meta`` (``fields`` limits which
+                        record fields are kept, e.g. ("id", "url", "text"))
+             "txt"      one text file per document, named by ``name``, with a
+                        ``documents.tsv`` index of ``columns``
+             "csv", "parquet"  one table of ``columns`` plus ``text_field``
+                        (parquet needs pandas and pyarrow)
+    dirs     folder template, e.g. "{level}/{category}": txt files go into these
+             folders, other formats write one file per folder. None = top level.
              Large flat directories are slow on shared file systems such as Lustre.
-    columns  fields for documents.tsv; a dict-valued field (e.g. ``register``)
-             becomes one column per key, ``register.NA`` ...
-    texts    False = tables only
+    columns  fields for the tables; a dict-valued field (e.g. ``register``) becomes
+             one column per key, ``register.NA`` ...
+    name     txt only: filename template, e.g. "{id}_{category}_{level}"
     Returns the number of documents written.
     """
+    if format not in FORMATS:
+        raise ValueError(f"format must be one of {FORMATS}, not {format!r}")
     out = Path(outdir)
     out.mkdir(parents=True, exist_ok=True)
-    rows, keys = [], {}
+    groups = {}                                   # folder -> [records]
     for r in sample.records():
-        row = {}
-        for col in columns:
-            v = value(r, col)
-            if isinstance(v, dict):
-                keys.setdefault(col, set()).update(v)
-                row.update({f"{col}.{k}": x for k, x in v.items()})
+        folder = Path(*[_safe(p) for p in _fill(dirs, r).split("/") if p]) if dirs else Path()
+        groups.setdefault(folder, []).append(r)
+
+    n = 0
+    index = []                                    # documents.tsv rows (txt)
+    for folder, recs in groups.items():
+        (out / folder).mkdir(parents=True, exist_ok=True)
+        if format == "txt":
+            for r in recs:
+                fname = str(folder / _filename(name, r)) if dirs else _filename(name, r)
+                (out / fname).write_text(value(r, text_field) or "", encoding="utf-8")
+                index.append({**_row(r, columns), "file": fname})
+        elif format == "jsonl":
+            with open(out / folder / "documents.jsonl", "w", encoding="utf-8") as fh:
+                for r in recs:
+                    keep = r if fields is None else {k: r.get(k) for k in fields}
+                    fh.write(json.dumps({**keep, "meta": r.get("meta")}, ensure_ascii=False) + "\n")
+        else:
+            rows = [{**_row(r, columns), text_field: value(r, text_field)} for r in recs]
+            if format == "csv":
+                header = _header(rows, columns) + [text_field]
+                _write_table(out / folder / "documents.csv", header, rows, delimiter=",")
             else:
-                row[col] = json.dumps(v, ensure_ascii=False) if isinstance(v, (list, tuple)) else v
-        if texts:
-            fname = _filename(name, r)
-            if dirs:
-                sub = Path(*[_safe(p) for p in _fill(dirs, r).split("/") if p])
-                (out / sub).mkdir(parents=True, exist_ok=True)
-                fname = str(sub / fname)
-            row["file"] = fname
-            (out / fname).write_text(value(r, text_field) or "", encoding="utf-8")
-        rows.append(row)
+                import pandas as pd
+                pd.DataFrame(rows).to_parquet(out / folder / "documents.parquet")
+        n += len(recs)
+    if format == "txt":
+        _write_tsv(out / "documents.tsv", _header(index, columns) + ["file"], index)
+    write_counts(sample, out / "cells.tsv")
+    return n
+
+
+def _row(r, columns):
+    row = {}
+    for col in columns:
+        v = value(r, col)
+        if isinstance(v, dict):
+            row.update({f"{col}.{k}": x for k, x in v.items()})
+        else:
+            row[col] = json.dumps(v, ensure_ascii=False) if isinstance(v, (list, tuple)) else v
+    return row
+
+
+def _header(rows, columns):
+    """Columns in order; a dict-valued column expands to its sorted keys."""
+    seen = set().union(*(row.keys() for row in rows)) if rows else set()
     header = []
     for col in columns:
-        header += [f"{col}.{k}" for k in sorted(keys[col])] if col in keys else [col]
-    if texts:
-        header.append("file")
-    _write_tsv(out / "documents.tsv", header, rows)
-    _write_tsv(out / "cells.tsv", [*sample.strata, "population", "taken"], sample.table())
-    return len(rows)
+        expanded = sorted(k for k in seen if k.startswith(col + "."))
+        header += expanded if expanded and col not in seen else [col]
+    return header
 
 
 def write_counts(sample, path):
@@ -196,8 +233,12 @@ class _Blank(dict):
 
 
 def _write_tsv(path, header, rows):
+    _write_table(path, header, rows, delimiter="\t")
+
+
+def _write_table(path, header, rows, delimiter):
     with open(path, "w", newline="", encoding="utf-8") as fh:
-        w = csv.DictWriter(fh, fieldnames=header, delimiter="\t", extrasaction="ignore",
+        w = csv.DictWriter(fh, fieldnames=header, delimiter=delimiter, extrasaction="ignore",
                            lineterminator="\n")
         w.writeheader()
         for row in rows:
