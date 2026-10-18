@@ -130,3 +130,13 @@ def test_export_rejects_unknown_format(tmp_path):
     s = webmeta.stratify(docs(10), n=1)
     with pytest.raises(ValueError):
         webmeta.export(s, tmp_path / "o", format="docx")
+
+
+def test_example_settings_run(tmp_path):
+    from pathlib import Path
+    from webmeta.cli import main
+    root = Path(__file__).parent.parent
+    assert main(["build", str(root / "tests" / "fixtures" / "hplt4_like.jsonl"),
+                 "--settings", str(root / "examples" / "news_and_blogs.py"),
+                 "-o", str(tmp_path / "o")]) == 0
+    assert (tmp_path / "o" / "cells.tsv").exists()

@@ -68,6 +68,8 @@ for doc in webmeta.run(docs, adapter="hplt4", lang="swe", country="FI", register
 ```bash
 webmeta check shard.jsonl.zst                          # which steps the data supports
 webmeta run shard.jsonl.zst -o out.jsonl --lang swe --country FI --register NA
+webmeta count shard.jsonl.zst --by lang,registers         # counts as TSV
+webmeta build sample.jsonl.zst --settings study.py -o out/ # a dataset from a settings file
 ```
 On LUMI, webmeta runs on validated samples published by `hplt-sampler`, not on raw shards; see [`lumi/`](lumi/).
 
@@ -84,6 +86,52 @@ On LUMI, webmeta runs on validated samples published by `hplt-sampler`, not on r
 | `threshold` | register probability needed for a label; default: the register model's per-language value (English 0.40, Finnish 0.45, …) |
 
 Every kept document gets a `meta` field with what webmeta derived; source fields are left untouched.
+
+## Building a dataset
+
+A study is a set of settings: which documents qualify, which fields define the cells, how many documents per cell, and how to write them out. webmeta turns those settings into the dataset, reproducibly.
+
+```python
+import webmeta
+
+settings = {
+    "adapter": "hplt4",
+    "filters": {"lang": ["fin", "swe"], "exclude": ("MT",)},          # as in the table above
+    "fields": {"words": lambda r: len(r["text"].split())},          # derived values, stored in meta
+    "keep": [lambda r: r["meta"]["words"] >= 200],                  # every rule must hold
+    "strata": ("lang", "hybrid"),                                    # the cells
+    "n": 50,                                                         # per cell; None = all, 0 = count only
+    "seed": 1,
+}
+sample = webmeta.build(webmeta.read("sample.jsonl.zst"), settings)
+print(list(sample.table()))          # per cell: population and how many were taken
+webmeta.export(sample, "out/", format="jsonl", dirs="{lang}")
+```
+
+| Setting | Meaning |
+|---|---|
+| `adapter` | `"hplt4"` for HPLT 4 records, `"contract"` for records already in webmeta's field names, or a function |
+| `threshold` | register threshold; default: the model's per-language value |
+| `filters` | keyword arguments of the filter table above |
+| `fields` | `{name: function(record)}`: derived values, stored in `meta` in order, so a later field can use an earlier one |
+| `keep` | functions `record -> bool`; a document must pass all of them |
+| `strata` | fields whose value combinations are the cells; `()` = one cell, a simple random sample |
+| `n` | documents per cell (equal allocation); `None` = every document; `0` = only count the cells |
+| `seed` | selection seed |
+
+**Reproducible selection.** Each document gets a pseudo-random rank from the seed and its id, and each cell keeps its `n` lowest-ranked documents. The same settings give the same dataset however the input is ordered or split, and a smaller `n` gives a subset of a larger one.
+
+**Export.** `webmeta.export(sample, outdir, format=...)` writes the documents and always a `cells.tsv` (per cell: its population and how many were taken).
+
+| `format` | Output |
+|---|---|
+| `jsonl` (default) | `documents.jsonl`: full records with `meta`; `fields=(...)` keeps only some record fields |
+| `txt` | one text file per document, named by `name` (e.g. `"{id}_{register}"`), plus a `documents.tsv` index of `columns` |
+| `csv`, `parquet` | one table of `columns` plus the text (parquet needs pandas and pyarrow) |
+
+`dirs` (e.g. `"{lang}/{register}"`) nests the output in folders: text files go into them, other formats write one file per folder. Large flat folders are slow on shared file systems such as Lustre. In `columns`, a dict-valued field such as `register` becomes one column per label (`register.NA`, …).
+
+**From the command line,** put the settings in a Python file that defines `SETTINGS` and, optionally, `EXPORT` (the keyword arguments of `export`), and run `webmeta build INPUT... --settings FILE -o OUTDIR`; `--counts-only` writes just `cells.tsv`. A worked example: [`examples/news_and_blogs.py`](examples/news_and_blogs.py).
 
 ## Your own corpus: the record contract
 
