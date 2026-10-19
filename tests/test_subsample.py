@@ -140,3 +140,18 @@ def test_example_settings_run(tmp_path):
                  "--settings", str(root / "examples" / "news_and_blogs.py"),
                  "-o", str(tmp_path / "o")]) == 0
     assert (tmp_path / "o" / "cells.tsv").exists()
+
+
+def test_records_without_ids_or_with_duplicates():
+    recs = [{"text": f"t{i % 7}", "meta": {"g": i % 2}} for i in range(40)]   # no ids, repeated texts
+    a = webmeta.stratify(recs, strata=("g",), n=5, seed=3)
+    b = webmeta.stratify(list(reversed(recs)), strata=("g",), n=5, seed=3)
+    assert len(a) == 10 and sorted(r["text"] for r in a.records()) == sorted(r["text"] for r in b.records())
+    dup = [{"id": "same", "text": "x", "meta": {}} for _ in range(5)]
+    assert len(webmeta.stratify(dup, n=3)) == 3
+
+
+def test_list_valued_strata_are_joined():
+    recs = [{"id": str(i), "meta": {"registers": ["NA", "nb"] if i % 2 else ["IN"]}} for i in range(10)]
+    s = webmeta.stratify(recs, strata=("registers",), n=2)
+    assert set(s.population) == {("NA+nb",), ("IN",)}

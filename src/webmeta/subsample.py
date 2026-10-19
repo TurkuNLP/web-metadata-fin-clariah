@@ -92,25 +92,35 @@ class Sample:
 
 
 def stratify(records, strata=(), n=None, seed=0, id_field="id"):
-    """Equal allocation: up to ``n`` records per cell, chosen by rank; returns a Sample."""
+    """Equal allocation: up to ``n`` records per cell, chosen by rank; returns a Sample.
+
+    A record without an id is ranked by its text instead. A list-valued stratum
+    (e.g. ``registers``) is joined into one value, "NA+nb".
+    """
     strata = tuple(strata)
     population = Counter()
     heaps = {}
-    for r in records:
-        c = tuple(value(r, f) for f in strata)
+    for seq, r in enumerate(records):
+        c = tuple(_cell_value(value(r, f)) for f in strata)
         population[c] += 1
         if n == 0:
             continue
         rid = value(r, id_field)
-        item = (-rank(rid, seed), str(rid), r)   # max-heap on rank: the worst kept is on top
+        key = str(rid) if rid is not None else "text:" + (value(r, "text") or "")
+        # max-heap on rank: the worst kept is on top; seq breaks ties between duplicates
+        item = (-rank(key, seed), key, -seq, r)
         h = heaps.setdefault(c, [])
         if n is None or len(h) < n:
             heapq.heappush(h, item)
-        elif item[:2] > h[0][:2]:
+        elif item[:3] > h[0][:3]:
             heapq.heapreplace(h, item)
-    cells = {c: [it[2] for it in sorted(h, key=lambda it: (-it[0], it[1]))]
+    cells = {c: [it[3] for it in sorted(h, key=lambda it: (-it[0], it[1], -it[2]))]
              for c, h in heaps.items()}
     return Sample(strata, cells, population, n, seed)
+
+
+def _cell_value(v):
+    return "+".join(map(str, v)) if isinstance(v, (list, tuple)) else v
 
 
 def build(records, settings):
