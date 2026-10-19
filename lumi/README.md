@@ -26,3 +26,17 @@ SAMPLE=v4/eng_Latn/all-n1000000-s20261015 \
 WEBMETA_CMD="count --by lang,registers -o out/eng_registers.tsv" \
 sbatch lumi/run_sample.sh
 ```
+
+## Building a dataset
+[`build.sh`](build.sh) runs a study's settings file (see the main README, *Building a
+dataset*) over one or more samples, e.g. one pool per quality level:
+```bash
+SAMPLES="v4/eng_Latn/5-n8100000-s20261016 v4/eng_Latn/6-n3400000-s20261016" \
+SETTINGS=examples/news_and_blogs.py OUT=out/news_and_blogs \
+sbatch lumi/build.sh
+```
+Each sample is fetched once into `samples/` and checked against its `SHA256SUMS`;
+`CLEAN=1` removes the downloads afterwards. The job refuses to overwrite `OUT`.
+Labelling runs at about 3,000 documents per second on one core, so 18 M
+documents take about 1.5 hours.
+

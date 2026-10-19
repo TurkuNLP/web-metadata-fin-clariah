@@ -19,8 +19,8 @@
 **Contributors:** TODO  
 **Deliverable location:**
 
-* Code repository: TODO (this repository)
-* Demonstration: TODO (Colab link to `notebooks/webmeta_demo.ipynb`)
+* Code repository: https://github.com/TurkuNLP/web-metadata-fin-clariah
+* Demonstration: [Google Colab notebook](https://colab.research.google.com/github/TurkuNLP/web-metadata-fin-clariah/blob/main/notebooks/webmeta_demo.ipynb)
 * Demo data: TODO (multilingual HPLT 4 sample on Hugging Face)
 
 **Keywords:** web data; metadata; language identification; country; web registers; HPLT
@@ -50,11 +50,13 @@ TODO: references; links; events (FIN-CLARIAH meeting poster, 9 Nov 2026).
 ## Using webmeta
 
 ### In Colab
-Open [`notebooks/webmeta_demo.ipynb`](notebooks/webmeta_demo.ipynb) in Colab (TODO: badge) and run all cells.
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/TurkuNLP/web-metadata-fin-clariah/blob/main/notebooks/webmeta_demo.ipynb)
+
+Open [`notebooks/webmeta_demo.ipynb`](notebooks/webmeta_demo.ipynb) in Colab and run all cells: choose the data, filter it, draw a sample with so many documents per cell, and download it.
 
 ### In Python
 ```bash
-pip install "webmeta[zst] @ git+https://github.com/TurkuNLP/web-metadata-fin-clariah"   # TODO: final URL
+pip install "webmeta[zst] @ git+https://github.com/TurkuNLP/web-metadata-fin-clariah"
 ```
 ```python
 import webmeta
