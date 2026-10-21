@@ -27,17 +27,18 @@ def annotate(record, threshold=None):
     meta.update(_language.annotate(record) if "language" not in gone
                 else {"lang": None, "languages": [], "multilingual": False})
     meta.update(_country.annotate(record) if "country" not in gone
-                else {"tld": None, "country": None})
+                else {"tld": None, "country": None, "country_name": None,
+                      "region": None, "subregion": None})
     meta.update(_register.annotate(record, threshold) if "register" not in gone
                 else {"registers": [], "hybrid": False, "threshold": None})
     return {**record, "meta": meta}
 
 
 def select(meta, lang=None, multilingual=None, any_segment=False,
-           country=None, register=None, hybrid=None, exclude=()):
+           country=None, region=None, subregion=None, register=None, hybrid=None, exclude=()):
     """True if an annotated record's ``meta`` passes every filter given."""
     return (_language.matches(meta, lang, multilingual, any_segment)
-            and _country.matches(meta, country)
+            and _country.matches(meta, country, region, subregion)
             and _register.matches(meta, register, hybrid, exclude))
 
 
@@ -53,7 +54,7 @@ def run(records, adapter="contract", threshold=None,
     """
     adapt = ADAPTERS[adapter] if isinstance(adapter, str) else adapter
     steps = [s for s, keys in (("language", ("lang", "multilingual")),
-                               ("country", ("country",)),
+                               ("country", ("country", "region", "subregion")),
                                ("register", ("register", "hybrid")))
              if any(filters.get(k) is not None for k in keys)]
     n = 0

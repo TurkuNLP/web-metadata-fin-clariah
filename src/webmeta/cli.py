@@ -1,4 +1,4 @@
-"""Command line: ``webmeta run`` filters, ``webmeta count`` tabulates, ``webmeta build`` makes a dataset from a settings file, ``webmeta check`` reports what a corpus supports."""
+"""Command line: ``webmeta run`` filters, ``webmeta count`` tabulates, ``webmeta build`` makes a dataset from a settings file, ``webmeta check`` reports what a corpus supports, ``webmeta geo`` shows the country table."""
 
 import argparse
 import itertools
@@ -24,6 +24,8 @@ def main(argv=None):
     r.add_argument("--any-segment", action="store_true", help="match --lang against segment languages too")
     r.add_argument("--multilingual", choices=["yes", "no"])
     r.add_argument("--country", type=_list, help="comma-separated ISO country codes")
+    r.add_argument("--region", type=_list, help="comma-separated UN regions, e.g. Europe,Asia")
+    r.add_argument("--subregion", type=_list, help='comma-separated UN subregions, e.g. "Northern Europe"')
     r.add_argument("--register", type=_list, help="comma-separated register labels")
     r.add_argument("--hybrid", choices=["yes", "no"])
     r.add_argument("--exclude", type=_list, help="comma-separated register labels that disqualify a document, e.g. MT")
@@ -48,6 +50,10 @@ def main(argv=None):
     b.add_argument("--counts-only", action="store_true",
                    help="only count the cells (n = 0): writes cells.tsv")
 
+    g = sub.add_parser("geo", help="show the country table in use, or rebuild it")
+    g.add_argument("--refresh", action="store_true", help="rebuild from the sources now (needs the geo extra)")
+    g.add_argument("--country", help="show one country's row, e.g. FI")
+
     c = sub.add_parser("check", help="count how many records can run each step")
     c.add_argument("input")
     c.add_argument("--adapter", default="hplt4", choices=sorted(io.ADAPTERS))
@@ -55,6 +61,18 @@ def main(argv=None):
 
     a = p.parse_args(argv)
     yn = {"yes": True, "no": False, None: None}
+
+    if a.cmd == "geo":
+        from . import geo
+        geo.table(refresh="force" if a.refresh else "auto")
+        info = geo.table_info()
+        if a.country:
+            json.dump(geo.lookup(a.country), sys.stdout, indent=2, ensure_ascii=False)
+        else:
+            info["countries"] = len(geo.table()["countries"])
+            json.dump(info, sys.stdout, indent=2, ensure_ascii=False)
+        print()
+        return 0
 
     if a.cmd == "check":
         adapt = io.ADAPTERS[a.adapter]
@@ -97,7 +115,7 @@ def main(argv=None):
     out = pipeline.run(raw, adapter=a.adapter, threshold=a.threshold, limit=a.limit,
                        strict=a.strict, lang=a.lang, any_segment=a.any_segment,
                        multilingual=yn[a.multilingual], country=a.country,
-                       register=a.register, hybrid=yn[a.hybrid], exclude=a.exclude or ())
+                       region=a.region, subregion=a.subregion, register=a.register, hybrid=yn[a.hybrid], exclude=a.exclude or ())
     n = io.write(out, a.out)
     print(f"wrote {n} records to {a.out}", file=sys.stderr)
     return 0

@@ -14,6 +14,7 @@ dependencies = []
 zst = ["zstandard"]
 tables = ["pandas", "pyarrow"]
 hf = ["datasets"]
+geo = ["geopandas"]
 all = ["zstandard", "pandas", "pyarrow", "datasets"]
 dev = ["pytest"]
 
@@ -22,3 +23,6 @@ webmeta = "webmeta.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+webmeta = ["data/*.json"]

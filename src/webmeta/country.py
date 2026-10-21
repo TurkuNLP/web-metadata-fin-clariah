@@ -51,12 +51,22 @@ def country(url, vanity=VANITY):
 
 
 def annotate(record):
-    return {"tld": tld(record.get("url")), "country": country(record.get("url"))}
+    """tld, country, and from the country table (webmeta.geo): its name, UN region and subregion."""
+    from . import geo
+    code = country(record.get("url"))
+    row = geo.lookup(code) or {}
+    return {"tld": tld(record.get("url")), "country": code, "country_name": row.get("name"),
+            "region": row.get("region"), "subregion": row.get("subregion")}
 
 
-def matches(meta, country=None):
-    """country: an ISO code or a list of them; None = any (including unknown)."""
-    if country is None:
-        return True
-    wanted = {country.upper()} if isinstance(country, str) else {c.upper() for c in country}
-    return meta["country"] in wanted
+def matches(meta, country=None, region=None, subregion=None):
+    """country: ISO code(s); region, subregion: UN names, e.g. "Europe", "Northern Europe".
+    Each is a value or a list of them; None = any (including unknown)."""
+    def ok(value, wanted, fold):
+        if wanted is None:
+            return True
+        wanted = [wanted] if isinstance(wanted, str) else wanted
+        return value is not None and fold(value) in {fold(w) for w in wanted}
+    return (ok(meta["country"], country, str.upper)
+            and ok(meta.get("region"), region, str.casefold)
+            and ok(meta.get("subregion"), subregion, str.casefold))

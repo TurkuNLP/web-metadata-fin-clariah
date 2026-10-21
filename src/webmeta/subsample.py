@@ -195,7 +195,17 @@ def export(sample, outdir, format="jsonl", dirs=None, columns=("id",), fields=No
     if format == "txt":
         _write_tsv(out / "documents.tsv", _header(index, columns) + ["file"], index)
     write_counts(sample, out / "cells.tsv")
+    _write_run_record(out, sample, format)
     return n
+
+
+def _write_run_record(out, sample, format):
+    """webmeta.json: the webmeta version, the selection, and the country table used."""
+    from . import __version__, geo
+    record = {"webmeta": __version__, "strata": list(sample.strata), "n": sample.n,
+              "seed": sample.seed, "format": format, "documents": len(sample),
+              "country_table": geo.table_info()}
+    (out / "webmeta.json").write_text(json.dumps(record, indent=1, ensure_ascii=False), encoding="utf-8")
 
 
 def _row(r, columns):

@@ -82,12 +82,28 @@ On LUMI, webmeta runs on validated samples published by `hplt-sampler`, not on r
 | `any_segment` | match `lang` in any part of the document, not only its main language |
 | `multilingual` | `True`: only documents with two or more segment languages |
 | `country` | ISO 3166-1 codes from the top-level domain; generic domains give no country |
+| `region`, `subregion` | the country's UN region and subregion, e.g. `Europe`, `Northern Europe` |
 | `register` | register labels; a document matches if it has any of them |
 | `hybrid` | `True`: only documents with two or more main registers |
 | `exclude` | register labels that disqualify a document, e.g. `("MT",)`; default none |
 | `threshold` | register probability needed for a label; default: the register model's per-language value (English 0.40, Finnish 0.45, …) |
 
 Every kept document gets a `meta` field with what webmeta derived; source fields are left untouched.
+
+## Country and region
+
+The country comes from the URL: its top-level domain, if that is a country code (`yle.fi` → `FI`, `bbc.co.uk` → `GB`). Generic domains (`.com`, `.org`, …) give no country, and neither do country codes sold worldwide as generic ones (`.io`, `.tv`, `.co`, …). The country is a signal, not a ground truth: a `.fi` site is usually Finnish, a `.com` site could be anywhere.
+
+Each country is then placed from a country table: its name, UN region and subregion, a map point (longitude, latitude) and the languages spoken there with their population shares. Every document's `meta` gets `country`, `country_name`, `region` and `subregion`; `webmeta.geo.lookup("FI")` gives the whole row.
+
+The table is built from public sources: [Natural Earth](https://www.naturalearthdata.com/) 10m countries and map units (public domain), [Unicode CLDR](https://cldr.unicode.org/) territory information (Unicode License), and SIL's [ISO 639-3](https://iso639-3.sil.org/) code table. Country names and borders change, so it is not frozen into a release:
+
+- webmeta uses the cached table in `~/.cache/webmeta/` (`WEBMETA_CACHE_DIR` overrides) while it is younger than 90 days, and otherwise rebuilds it from the sources. Rebuilding needs the `geo` extra (`pip install "webmeta[geo] @ git+…"`) and network access.
+- If it cannot rebuild, it falls back to the stale cache, or to the snapshot shipped with webmeta, so offline use always works.
+- `WEBMETA_GEO_TABLE=/path/to/countries.json` pins a table, for a reproducible rerun. Every exported dataset records the table it used in `webmeta.json`.
+- `webmeta geo` shows the table in use, `webmeta geo --country FI` one row, `webmeta geo --refresh` rebuilds it now.
+
+Credits: the geolocation of country codes (Natural Earth regions and map points) follows a geolocator by TODO (name as the author wishes), TurkuNLP.
 
 ## Building a dataset
 
@@ -123,7 +139,7 @@ webmeta.export(sample, "out/", format="jsonl", dirs="{lang}")
 
 **Reproducible selection.** Each document gets a pseudo-random rank from the seed and its id, and each cell keeps its `n` lowest-ranked documents. The same settings give the same dataset however the input is ordered or split, and a smaller `n` gives a subset of a larger one.
 
-**Export.** `webmeta.export(sample, outdir, format=...)` writes the documents and always a `cells.tsv` (per cell: its population and how many were taken).
+**Export.** `webmeta.export(sample, outdir, format=...)` writes the documents, always a `cells.tsv` (per cell: its population and how many were taken), and `webmeta.json` (the webmeta version, the selection and the country table used).
 
 | `format` | Output |
 |---|---|
