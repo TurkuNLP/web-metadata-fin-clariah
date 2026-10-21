@@ -7,6 +7,8 @@
 
 # D3.3.3 (a) Analysis tools for providing metadata for web data: language, country and register
 
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/TurkuNLP/web-metadata-fin-clariah/blob/main/notebooks/webmeta_demo.ipynb)
+
 **Project:** [FIN-CLARIAH](https://www.kielipankki.fi/organization/fin-clariah/)  
 **Grant agreement:** Research Council of Finland no. 358720  
 **Start date:** TODO (the 2025 template says 01-01-2024; check the current phase)  
@@ -50,8 +52,6 @@ TODO: references; links; events (FIN-CLARIAH meeting poster, 9 Nov 2026).
 ## Using webmeta
 
 ### In Colab
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/TurkuNLP/web-metadata-fin-clariah/blob/main/notebooks/webmeta_demo.ipynb)
-
 Open [`notebooks/webmeta_demo.ipynb`](notebooks/webmeta_demo.ipynb) in Colab and run all cells: choose the data, filter it, draw a sample with so many documents per cell, and download it.
 
 ### In Python
