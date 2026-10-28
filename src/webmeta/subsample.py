@@ -27,6 +27,7 @@ or split, and a smaller n gives a subset of a larger one.
 import csv
 import hashlib
 import heapq
+import linecache
 import json
 from collections import Counter
 from pathlib import Path
@@ -70,11 +71,12 @@ class Sample:
     strata      the fields that define the cells
     cells       {cell: [records]}, each list ordered by rank
     population  {cell: number of documents seen in that cell}
+    settings    the settings that produced it (set by ``build``), for the run record
     """
 
-    def __init__(self, strata, cells, population, n, seed):
+    def __init__(self, strata, cells, population, n, seed, settings=None):
         self.strata, self.cells, self.population = tuple(strata), cells, population
-        self.n, self.seed = n, seed
+        self.n, self.seed, self.settings = n, seed, settings
 
     def records(self):
         for c in sorted(self.cells, key=_sort_key):
@@ -134,7 +136,9 @@ def build(records, settings):
                        threshold=s.get("threshold"), **(s.get("filters") or {}))
     out = derive(out, s.get("fields"))
     out = keep(out, s.get("keep"))
-    return stratify(out, s.get("strata", ()), s.get("n"), s.get("seed", 0))
+    sample = stratify(out, s.get("strata", ()), s.get("n"), s.get("seed", 0))
+    sample.settings = s
+    return sample
 
 
 # ------------------------------------------------------------------- export
@@ -143,7 +147,7 @@ FORMATS = ("jsonl", "txt", "csv", "parquet")
 
 
 def export(sample, outdir, format="jsonl", dirs=None, columns=("id",), fields=None,
-           name="{id}", text_field="text"):
+           name="{id}", text_field="text", settings=None):
     """Write a Sample to ``outdir`` in the chosen format, plus ``cells.tsv``.
 
     format   "jsonl"    full records with webmeta's ``meta`` (``fields`` limits which
@@ -158,6 +162,8 @@ def export(sample, outdir, format="jsonl", dirs=None, columns=("id",), fields=No
     columns  fields for the tables; a dict-valued field (e.g. ``register``) becomes
              one column per key, ``register.NA`` ...
     name     txt only: filename template, e.g. "{id}_{category}_{level}"
+    settings what produced the sample (inputs, filters, ...), for the run record;
+             default: the settings ``build`` used
     Returns the number of documents written.
     """
     if format not in FORMATS:
@@ -195,17 +201,53 @@ def export(sample, outdir, format="jsonl", dirs=None, columns=("id",), fields=No
     if format == "txt":
         _write_tsv(out / "documents.tsv", _header(index, columns) + ["file"], index)
     write_counts(sample, out / "cells.tsv")
-    _write_run_record(out, sample, format)
+    _write_run_record(out, sample, format, settings if settings is not None else sample.settings)
     return n
 
 
-def _write_run_record(out, sample, format):
-    """webmeta.json: the webmeta version, the selection, and the country table used."""
+def _write_run_record(out, sample, format, settings):
+    """webmeta.json: the webmeta version, the settings and selection, and the country table used."""
     from . import __version__, geo
-    record = {"webmeta": __version__, "strata": list(sample.strata), "n": sample.n,
+    record = {"webmeta": __version__, "settings": _describe(settings),
+              "strata": list(sample.strata), "n": sample.n,
               "seed": sample.seed, "format": format, "documents": len(sample),
               "country_table": geo.table_info()}
     (out / "webmeta.json").write_text(json.dumps(record, indent=1, ensure_ascii=False), encoding="utf-8")
+
+
+def _describe(v):
+    """Settings as JSON: a function becomes its source (a lambda) or its dotted name."""
+    if isinstance(v, dict):
+        return {str(k): _describe(x) for k, x in v.items()}
+    if isinstance(v, (list, tuple, set)):
+        return [_describe(x) for x in v]
+    if callable(v):
+        if getattr(v, "__name__", "") == "<lambda>":
+            source = _lambda_source(v)
+            if source:
+                return source
+        return f"{getattr(v, '__module__', '?')}.{getattr(v, '__qualname__', repr(v))}"
+    if v is None or isinstance(v, (str, int, float, bool)):
+        return v
+    return repr(v)
+
+
+def _lambda_source(fn):
+    """The text of a lambda alone, from the source it was defined in; None if unavailable."""
+    import ast
+    code = fn.__code__
+    text = "".join(linecache.getlines(code.co_filename))
+    try:
+        tree = ast.parse(text)
+    except (SyntaxError, ValueError):
+        return None
+    found = [n for n in ast.walk(tree) if isinstance(n, ast.Lambda) and n.lineno == code.co_firstlineno]
+    if len(found) > 1:                    # several on one line: match the body's position (3.11+)
+        positions = code.co_positions() if hasattr(code, "co_positions") else ()
+        pos = next((p for p in positions if p[0] is not None), None)
+        found = [n for n in found if pos and (n.body.lineno, n.body.col_offset) <= (pos[0], pos[2])
+                 and (pos[1], pos[3]) <= (n.body.end_lineno, n.body.end_col_offset)]
+    return ast.get_source_segment(text, found[0]) if len(found) == 1 else None
 
 
 def _row(r, columns):

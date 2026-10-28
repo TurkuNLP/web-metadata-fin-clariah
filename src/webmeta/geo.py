@@ -25,7 +25,7 @@ Unicode CLDR territory information for languages (Unicode License); SIL's ISO
 corpora such as HPLT use.
 
 The geolocation (Natural Earth regions and label points) follows a TurkuNLP
-geolocator for ccTLDs; its author is credited in the README.
+geolocator for ccTLDs.
 """
 
 import datetime as _dt

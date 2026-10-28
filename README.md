@@ -103,8 +103,6 @@ The table is built from public sources: [Natural Earth](https://www.naturalearth
 - `WEBMETA_GEO_TABLE=/path/to/countries.json` pins a table, for a reproducible rerun. Every exported dataset records the table it used in `webmeta.json`.
 - `webmeta geo` shows the table in use, `webmeta geo --country FI` one row, `webmeta geo --refresh` rebuilds it now.
 
-Credits: the geolocation of country codes (Natural Earth regions and map points) follows a geolocator by TODO (name as the author wishes), TurkuNLP.
-
 ## Building a dataset
 
 A study is a set of settings: which documents qualify, which fields define the cells, how many documents per cell, and how to write them out. webmeta turns those settings into the dataset, reproducibly.

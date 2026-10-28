@@ -62,6 +62,15 @@ def test_zst_roundtrip(tmp_path):
     assert len(list(webmeta.read(p))) == 6
 
 
+def test_parquet_of_hplt4_records(tmp_path):
+    pa = pytest.importorskip("pyarrow")
+    import pyarrow.parquet as pq
+    path = tmp_path / "hplt.parquet"
+    pq.write_table(pa.Table.from_pylist(hplt()), path)
+    got = [r["meta"] for r in webmeta.run(webmeta.read(path), adapter="hplt4")]
+    assert got == [r["meta"] for r in webmeta.run(hplt(), adapter="hplt4")]
+
+
 def test_cli(tmp_path):
     from webmeta.cli import main
     out = tmp_path / "out.jsonl"

@@ -96,7 +96,8 @@ def main(argv=None):
             print(f"counted {sum(sample.population.values())} documents in "
                   f"{len(sample.population)} cells -> {a.out}/cells.tsv", file=sys.stderr)
         else:
-            n = subsample.export(sample, a.out, **getattr(study, "EXPORT", {}))
+            record = {"settings_file": a.settings, "inputs": list(a.inputs), **settings}
+            n = subsample.export(sample, a.out, settings=record, **getattr(study, "EXPORT", {}))
             print(f"wrote {n} documents to {a.out}", file=sys.stderr)
         return 0
 

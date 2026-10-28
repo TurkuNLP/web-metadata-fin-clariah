@@ -10,7 +10,7 @@ import pytest
 NB = Path(__file__).parent.parent / "notebooks" / "webmeta_demo.ipynb"
 
 
-@pytest.mark.parametrize("source,fmt", [("Demo sample (HPLT 4, multilingual)", "txt"),
+@pytest.mark.parametrize("source,fmt", [("Demo sample (HPLT 4, Finnish and Swedish)", "txt"),
                                         ("Upload my own file", "jsonl")])
 def test_notebook_runs(tmp_path, source, fmt):
     pytest.importorskip("pandas")
@@ -25,7 +25,7 @@ def test_notebook_runs(tmp_path, source, fmt):
             if cell["cell_type"] != "code":
                 continue
             src = "".join(cell["source"])
-            src = src.replace('SOURCE = "Demo sample (HPLT 4, multilingual)"', f'SOURCE = "{source}"')
+            src = src.replace('SOURCE = "Demo sample (HPLT 4, Finnish and Swedish)"', f'SOURCE = "{source}"')
             src = src.replace('LANGUAGES = "fi,sv"', 'LANGUAGES = ""')
             src = src.replace('FORMAT = "jsonl"', f'FORMAT = "{fmt}"')
             with contextlib.redirect_stdout(io.StringIO()):

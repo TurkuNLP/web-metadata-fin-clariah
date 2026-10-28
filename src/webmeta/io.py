@@ -31,13 +31,15 @@ def read_jsonl(path):
 
 
 def read_table(path):
-    """Yield dicts from a CSV, TSV or Parquet file (needs pandas)."""
-    import pandas as pd
+    """Yield dicts from a CSV, TSV or Parquet file (needs pandas; Parquet needs pyarrow)."""
     path = str(path)
     if path.endswith(".parquet"):
-        df = pd.read_parquet(path)
-    else:
-        df = pd.read_csv(path, sep="\t" if path.endswith(".tsv") else ",")
+        # pyarrow gives plain lists and dicts; pandas would give numpy arrays
+        import pyarrow.parquet as pq
+        yield from pq.read_table(path).to_pylist()
+        return
+    import pandas as pd
+    df = pd.read_csv(path, sep="\t" if path.endswith(".tsv") else ",")
     # Empty cells arrive as NaN; the contract treats them as missing.
     df = df.astype(object).where(df.notna(), None)
     for row in df.to_dict(orient="records"):

@@ -125,6 +125,17 @@ def test_export_csv_and_parquet(tmp_path):
     assert len(pd.read_parquet(tmp_path / "p" / "documents.parquet")) == 6
 
 
+def test_run_record_keeps_the_settings(tmp_path):
+    import json
+    s = webmeta.stratify(docs(60), strata=("lang",), n=3, seed=4)
+    webmeta.export(s, tmp_path / "o", settings={"filters": {"lang": ["fin"], "region": "Europe"},
+                                                "keep": [lambda r: r["meta"]["level"] > 5]})
+    record = json.loads((tmp_path / "o" / "webmeta.json").read_text())
+    assert record["settings"]["filters"] == {"lang": ["fin"], "region": "Europe"}
+    assert "level\"] > 5" in record["settings"]["keep"][0]
+    assert record["seed"] == 4 and record["strata"] == ["lang"]
+
+
 def test_export_rejects_unknown_format(tmp_path):
     import pytest
     s = webmeta.stratify(docs(10), n=1)
