@@ -169,3 +169,6 @@ python -m venv .venv && .venv/bin/pip install -e ".[all,dev]"
 .venv/bin/pytest
 ```
 The test fixtures are synthetic; see [`tests/fixtures/README.md`](tests/fixtures/README.md).
+
+## Licence
+The code is licensed under the [Apache License 2.0](LICENSE). The bundled country table includes data from third-party sources under their own terms; see [NOTICE](NOTICE).

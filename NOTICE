@@ -1,0 +1,15 @@
+webmeta
+Copyright 2026 TurkuNLP, University of Turku
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+The country table shipped in src/webmeta/data/countries.json, and the table
+webmeta builds at run time, contain data from:
+
+- Natural Earth (https://www.naturalearthdata.com/): admin-0 countries and map
+  units, 1:10m. Public domain.
+- Unicode CLDR (https://cldr.unicode.org/): territory information (languages and
+  their population shares). Copyright (c) Unicode, Inc. Unicode License v3,
+  https://www.unicode.org/license.txt
+- ISO 639-3 code table, SIL International as registration authority
+  (https://iso639-3.sil.org/), used to map two-letter to three-letter language codes.
