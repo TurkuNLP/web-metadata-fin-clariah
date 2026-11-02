@@ -206,12 +206,12 @@ def export(sample, outdir, format="jsonl", dirs=None, columns=("id",), fields=No
 
 
 def _write_run_record(out, sample, format, settings):
-    """webmeta.json: the webmeta version, the settings and selection, and the country table used."""
-    from . import __version__, geo
+    """webmeta.json: the webmeta version, the settings and selection, and the country tables used."""
+    from . import __version__, cctld, geo
     record = {"webmeta": __version__, "settings": _describe(settings),
               "strata": list(sample.strata), "n": sample.n,
               "seed": sample.seed, "format": format, "documents": len(sample),
-              "country_table": geo.table_info()}
+              "country_table": geo.table_info(), "cctld_use": cctld.use_info()}
     (out / "webmeta.json").write_text(json.dumps(record, indent=1, ensure_ascii=False), encoding="utf-8")
 
 

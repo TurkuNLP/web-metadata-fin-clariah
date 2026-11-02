@@ -13,3 +13,7 @@ webmeta builds at run time, contain data from:
   https://www.unicode.org/license.txt
 - ISO 639-3 code table, SIL International as registration authority
   (https://iso639-3.sil.org/), used to map two-letter to three-letter language codes.
+
+The table of how country-code domains are used (src/webmeta/data/cctld_use.json)
+is computed from document counts of HPLT 4.0 (https://hplt-project.org/), with
+population figures from Unicode CLDR and SIL's ISO 639-3 macrolanguage table.

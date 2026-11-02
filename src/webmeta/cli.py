@@ -1,9 +1,10 @@
-"""Command line: ``webmeta run`` filters, ``webmeta count`` tabulates, ``webmeta build`` makes a dataset from a settings file, ``webmeta check`` reports what a corpus supports, ``webmeta geo`` shows the country table."""
+"""Command line: ``webmeta run`` filters, ``webmeta count`` tabulates, ``webmeta build`` makes a dataset from a settings file, ``webmeta check`` reports what a corpus supports, ``webmeta geo`` shows the country table, ``webmeta cctld`` how country codes are used."""
 
 import argparse
 import itertools
 import json
 import sys
+from collections import Counter
 
 from . import io, pipeline, schema, subsample
 
@@ -54,6 +55,13 @@ def main(argv=None):
     g.add_argument("--refresh", action="store_true", help="rebuild from the sources now (needs the geo extra)")
     g.add_argument("--country", help="show one country's row, e.g. FI")
 
+    u = sub.add_parser("cctld", help="show how country codes are used (national or worldwide), "
+                                     "or recompute that from corpus counts")
+    u.add_argument("--code", help="show one code, e.g. TV")
+    u.add_argument("--counts", help="CSV of tld, language, document_count to recompute from")
+    u.add_argument("--source", default="", help="with --counts: a description of the counts")
+    u.add_argument("-o", "--out", help="with --counts: where to write the table (default: stdout)")
+
     c = sub.add_parser("check", help="count how many records can run each step")
     c.add_argument("input")
     c.add_argument("--adapter", default="hplt4", choices=sorted(io.ADAPTERS))
@@ -71,6 +79,24 @@ def main(argv=None):
         else:
             info["countries"] = len(geo.table()["countries"])
             json.dump(info, sys.stdout, indent=2, ensure_ascii=False)
+        print()
+        return 0
+
+    if a.cmd == "cctld":
+        from . import cctld
+        if a.counts:
+            t = cctld.build(a.counts, a.source)
+            text = json.dumps(t, indent=1, ensure_ascii=False) + "\n"
+            if a.out:
+                from pathlib import Path
+                Path(a.out).write_text(text, encoding="utf-8")
+                n = Counter(r["class"] for r in t["codes"].values())
+                print(f"{len(t['codes'])} codes ({dict(n)}) -> {a.out}", file=sys.stderr)
+            else:
+                sys.stdout.write(text)
+            return 0
+        out = cctld.use()["codes"].get(a.code.upper()) if a.code else cctld.use_info()
+        json.dump(out, sys.stdout, indent=2, ensure_ascii=False)
         print()
         return 0
 

@@ -1,0 +1,1956 @@
+{
+ "built": "2026-11-02T14:04:31+00:00",
+ "source": "HPLT 4.0 clean: documents per country-code domain and language (7.0 billion documents on 242 codes), counted by TurkuNLP, 2026-11-02",
+ "rule": {
+  "own_share": 0.5,
+  "max_per_inhabitant": 30,
+  "language_share": 0.01,
+  "never_local": [
+   "eng"
+  ]
+ },
+ "country_table": {
+  "built": "2026-10-21T22:09:13+00:00",
+  "cldr_version": "48"
+ },
+ "codes": {
+  "AD": {
+   "class": "national",
+   "documents": 430098,
+   "own_share": 0.8268,
+   "inhabitants": 85370,
+   "per_inhabitant": 5.038
+  },
+  "AE": {
+   "class": "national",
+   "documents": 8674961,
+   "own_share": 0.9437,
+   "inhabitants": 10032200,
+   "per_inhabitant": 0.8647
+  },
+  "AF": {
+   "class": "national",
+   "documents": 880990,
+   "own_share": 0.6362,
+   "inhabitants": 40121600,
+   "per_inhabitant": 0.022
+  },
+  "AG": {
+   "class": "national",
+   "documents": 799932,
+   "own_share": 0.5379,
+   "inhabitants": 102634,
+   "per_inhabitant": 7.794
+  },
+  "AI": {
+   "class": "gated",
+   "documents": 7122666,
+   "own_share": 0.7931,
+   "inhabitants": 19416,
+   "per_inhabitant": 366.8452,
+   "local_documents": 0,
+   "local_per_inhabitant": 0.0,
+   "local_languages": []
+  },
+  "AL": {
+   "class": "national",
+   "documents": 4006016,
+   "own_share": 0.8414,
+   "inhabitants": 3107100,
+   "per_inhabitant": 1.2893
+  },
+  "AM": {
+   "class": "national",
+   "documents": 7807455,
+   "own_share": 0.749,
+   "inhabitants": 2976770,
+   "per_inhabitant": 2.6228
+  },
+  "AO": {
+   "class": "national",
+   "documents": 434232,
+   "own_share": 0.8222,
+   "inhabitants": 37202100,
+   "per_inhabitant": 0.0117
+  },
+  "AQ": {
+   "class": "gated",
+   "documents": 13209,
+   "own_share": 0.0,
+   "inhabitants": 300,
+   "per_inhabitant": 44.03,
+   "local_documents": 0,
+   "local_per_inhabitant": 0.0,
+   "local_languages": []
+  },
+  "AR": {
+   "class": "national",
+   "documents": 67017326,
+   "own_share": 0.9852,
+   "inhabitants": 46994400,
+   "per_inhabitant": 1.4261
+  },
+  "AS": {
+   "class": "gated",
+   "documents": 245735,
+   "own_share": 0.3227,
+   "inhabitants": 43895,
+   "per_inhabitant": 5.5982,
+   "local_documents": 16,
+   "local_per_inhabitant": 0.0004,
+   "local_languages": [
+    "smo"
+   ]
+  },
+  "AT": {
+   "class": "national",
+   "documents": 67684483,
+   "own_share": 0.9783,
+   "inhabitants": 8967980,
+   "per_inhabitant": 7.5473
+  },
+  "AU": {
+   "class": "national",
+   "documents": 165854683,
+   "own_share": 0.9873,
+   "inhabitants": 26768600,
+   "per_inhabitant": 6.1959
+  },
+  "AW": {
+   "class": "national",
+   "documents": 40239,
+   "own_share": 0.9153,
+   "inhabitants": 125063,
+   "per_inhabitant": 0.3217
+  },
+  "AX": {
+   "class": "national",
+   "documents": 191073,
+   "own_share": 0.9013,
+   "inhabitants": 26200,
+   "per_inhabitant": 7.2929
+  },
+  "AZ": {
+   "class": "national",
+   "documents": 12681084,
+   "own_share": 0.552,
+   "inhabitants": 10650200,
+   "per_inhabitant": 1.1907
+  },
+  "BA": {
+   "class": "national",
+   "documents": 4320754,
+   "own_share": 0.9666,
+   "inhabitants": 3798670,
+   "per_inhabitant": 1.1374
+  },
+  "BB": {
+   "class": "national",
+   "documents": 200306,
+   "own_share": 0.999,
+   "inhabitants": 304139,
+   "per_inhabitant": 0.6586
+  },
+  "BD": {
+   "class": "national",
+   "documents": 2197099,
+   "own_share": 0.9709,
+   "inhabitants": 168697000,
+   "per_inhabitant": 0.013
+  },
+  "BE": {
+   "class": "national",
+   "documents": 60263662,
+   "own_share": 0.9239,
+   "inhabitants": 11977600,
+   "per_inhabitant": 5.0314
+  },
+  "BF": {
+   "class": "national",
+   "documents": 217660,
+   "own_share": 0.7842,
+   "inhabitants": 23042200,
+   "per_inhabitant": 0.0094
+  },
+  "BG": {
+   "class": "national",
+   "documents": 22887064,
+   "own_share": 0.9932,
+   "inhabitants": 6782660,
+   "per_inhabitant": 3.3743
+  },
+  "BH": {
+   "class": "gated",
+   "documents": 182809,
+   "own_share": 0.2712,
+   "inhabitants": 1566890,
+   "per_inhabitant": 0.1167,
+   "local_documents": 49571,
+   "local_per_inhabitant": 0.0316,
+   "local_languages": [
+    "ara"
+   ]
+  },
+  "BI": {
+   "class": "national",
+   "documents": 151395,
+   "own_share": 0.6418,
+   "inhabitants": 13590100,
+   "per_inhabitant": 0.0111
+  },
+  "BJ": {
+   "class": "national",
+   "documents": 298141,
+   "own_share": 0.9506,
+   "inhabitants": 14697100,
+   "per_inhabitant": 0.0203
+  },
+  "BM": {
+   "class": "national",
+   "documents": 159423,
+   "own_share": 0.9441,
+   "inhabitants": 72800,
+   "per_inhabitant": 2.1899
+  },
+  "BN": {
+   "class": "national",
+   "documents": 270381,
+   "own_share": 0.9764,
+   "inhabitants": 491900,
+   "per_inhabitant": 0.5497
+  },
+  "BO": {
+   "class": "national",
+   "documents": 2697811,
+   "own_share": 0.9365,
+   "inhabitants": 12312000,
+   "per_inhabitant": 0.2191
+  },
+  "BR": {
+   "class": "national",
+   "documents": 199970860,
+   "own_share": 0.9777,
+   "inhabitants": 220052000,
+   "per_inhabitant": 0.9087
+  },
+  "BS": {
+   "class": "national",
+   "documents": 88361,
+   "own_share": 0.9097,
+   "inhabitants": 410862,
+   "per_inhabitant": 0.2151
+  },
+  "BT": {
+   "class": "national",
+   "documents": 190828,
+   "own_share": 0.9684,
+   "inhabitants": 884546,
+   "per_inhabitant": 0.2157
+  },
+  "BW": {
+   "class": "national",
+   "documents": 197944,
+   "own_share": 0.9902,
+   "inhabitants": 2450670,
+   "per_inhabitant": 0.0808
+  },
+  "BY": {
+   "class": "national",
+   "documents": 34721786,
+   "own_share": 0.9741,
+   "inhabitants": 9501450,
+   "per_inhabitant": 3.6544
+  },
+  "BZ": {
+   "class": "gated",
+   "documents": 1084754,
+   "own_share": 0.4053,
+   "inhabitants": 415789,
+   "per_inhabitant": 2.6089,
+   "local_documents": 50160,
+   "local_per_inhabitant": 0.1206,
+   "local_languages": [
+    "spa"
+   ]
+  },
+  "CA": {
+   "class": "national",
+   "documents": 125301502,
+   "own_share": 0.9876,
+   "inhabitants": 38794800,
+   "per_inhabitant": 3.2299
+  },
+  "CC": {
+   "class": "gated",
+   "documents": 37457787,
+   "own_share": 0.1182,
+   "inhabitants": 593,
+   "per_inhabitant": 63166.5885,
+   "local_documents": 154703,
+   "local_per_inhabitant": 260.882,
+   "local_languages": []
+  },
+  "CD": {
+   "class": "national",
+   "documents": 895925,
+   "own_share": 0.6734,
+   "inhabitants": 115403000,
+   "per_inhabitant": 0.0078
+  },
+  "CF": {
+   "class": "gated",
+   "documents": 3659503,
+   "own_share": 0.0993,
+   "inhabitants": 5650960,
+   "per_inhabitant": 0.6476,
+   "local_documents": 363378,
+   "local_per_inhabitant": 0.0643,
+   "local_languages": [
+    "fra"
+   ]
+  },
+  "CG": {
+   "class": "national",
+   "documents": 63058,
+   "own_share": 0.6649,
+   "inhabitants": 6097670,
+   "per_inhabitant": 0.0103
+  },
+  "CH": {
+   "class": "national",
+   "documents": 86328267,
+   "own_share": 0.9725,
+   "inhabitants": 8860570,
+   "per_inhabitant": 9.743
+  },
+  "CI": {
+   "class": "national",
+   "documents": 698799,
+   "own_share": 0.9037,
+   "inhabitants": 29981800,
+   "per_inhabitant": 0.0233
+  },
+  "CK": {
+   "class": "national",
+   "documents": 12642,
+   "own_share": 0.9858,
+   "inhabitants": 7761,
+   "per_inhabitant": 1.6289
+  },
+  "CL": {
+   "class": "national",
+   "documents": 35480384,
+   "own_share": 0.9773,
+   "inhabitants": 18664700,
+   "per_inhabitant": 1.9009
+  },
+  "CM": {
+   "class": "gated",
+   "documents": 817751,
+   "own_share": 0.3943,
+   "inhabitants": 30966100,
+   "per_inhabitant": 0.0264,
+   "local_documents": 212005,
+   "local_per_inhabitant": 0.0068,
+   "local_languages": [
+    "fra"
+   ]
+  },
+  "CN": {
+   "class": "national",
+   "documents": 359468482,
+   "own_share": 0.9625,
+   "inhabitants": 1416040000,
+   "per_inhabitant": 0.2539
+  },
+  "CO": {
+   "class": "gated",
+   "documents": 76083673,
+   "own_share": 0.2667,
+   "inhabitants": 49588400,
+   "per_inhabitant": 1.5343,
+   "local_documents": 20290088,
+   "local_per_inhabitant": 0.4092,
+   "local_languages": [
+    "spa"
+   ]
+  },
+  "CR": {
+   "class": "national",
+   "documents": 1797429,
+   "own_share": 0.8679,
+   "inhabitants": 5265580,
+   "per_inhabitant": 0.3414
+  },
+  "CU": {
+   "class": "national",
+   "documents": 4285879,
+   "own_share": 0.8938,
+   "inhabitants": 10966000,
+   "per_inhabitant": 0.3908
+  },
+  "CV": {
+   "class": "national",
+   "documents": 367586,
+   "own_share": 0.8224,
+   "inhabitants": 611014,
+   "per_inhabitant": 0.6016
+  },
+  "CW": {
+   "class": "national",
+   "documents": 52254,
+   "own_share": 0.7579,
+   "inhabitants": 153289,
+   "per_inhabitant": 0.3409
+  },
+  "CX": {
+   "class": "gated",
+   "documents": 404868,
+   "own_share": 0.5019,
+   "inhabitants": 1692,
+   "per_inhabitant": 239.2837,
+   "local_documents": 0,
+   "local_per_inhabitant": 0.0,
+   "local_languages": []
+  },
+  "CY": {
+   "class": "national",
+   "documents": 2294945,
+   "own_share": 0.957,
+   "inhabitants": 1320530,
+   "per_inhabitant": 1.7379
+  },
+  "CZ": {
+   "class": "national",
+   "documents": 113760667,
+   "own_share": 0.9594,
+   "inhabitants": 10837900,
+   "per_inhabitant": 10.4966
+  },
+  "DE": {
+   "class": "national",
+   "documents": 684665968,
+   "own_share": 0.9906,
+   "inhabitants": 84119100,
+   "per_inhabitant": 8.1392
+  },
+  "DJ": {
+   "class": "gated",
+   "documents": 184996,
+   "own_share": 0.2049,
+   "inhabitants": 994974,
+   "per_inhabitant": 0.1859,
+   "local_documents": 37900,
+   "local_per_inhabitant": 0.0381,
+   "local_languages": [
+    "fra",
+    "ara"
+   ]
+  },
+  "DK": {
+   "class": "national",
+   "documents": 50615063,
+   "own_share": 0.9869,
+   "inhabitants": 5973140,
+   "per_inhabitant": 8.4738
+  },
+  "DM": {
+   "class": "national",
+   "documents": 21083,
+   "own_share": 0.9763,
+   "inhabitants": 74661,
+   "per_inhabitant": 0.2824
+  },
+  "DO": {
+   "class": "national",
+   "documents": 4492335,
+   "own_share": 0.9045,
+   "inhabitants": 10815900,
+   "per_inhabitant": 0.4153
+  },
+  "DZ": {
+   "class": "national",
+   "documents": 1292389,
+   "own_share": 0.9887,
+   "inhabitants": 47022500,
+   "per_inhabitant": 0.0275
+  },
+  "EC": {
+   "class": "national",
+   "documents": 5188500,
+   "own_share": 0.8293,
+   "inhabitants": 18310000,
+   "per_inhabitant": 0.2834
+  },
+  "EE": {
+   "class": "national",
+   "documents": 15268448,
+   "own_share": 0.9854,
+   "inhabitants": 1193790,
+   "per_inhabitant": 12.7899
+  },
+  "EG": {
+   "class": "national",
+   "documents": 2066204,
+   "own_share": 0.9403,
+   "inhabitants": 111247000,
+   "per_inhabitant": 0.0186
+  },
+  "ER": {
+   "class": "national",
+   "documents": 28,
+   "own_share": 1.0,
+   "inhabitants": 6343960,
+   "per_inhabitant": 0.0
+  },
+  "ES": {
+   "class": "national",
+   "documents": 177132923,
+   "own_share": 0.97,
+   "inhabitants": 47280400,
+   "per_inhabitant": 3.7464
+  },
+  "ET": {
+   "class": "national",
+   "documents": 206354,
+   "own_share": 0.798,
+   "inhabitants": 118550000,
+   "per_inhabitant": 0.0017
+  },
+  "FI": {
+   "class": "national",
+   "documents": 39017894,
+   "own_share": 0.9836,
+   "inhabitants": 5626410,
+   "per_inhabitant": 6.9348
+  },
+  "FJ": {
+   "class": "national",
+   "documents": 351681,
+   "own_share": 0.9833,
+   "inhabitants": 951611,
+   "per_inhabitant": 0.3696
+  },
+  "FK": {
+   "class": "national",
+   "documents": 5823,
+   "own_share": 0.8889,
+   "inhabitants": 3662,
+   "per_inhabitant": 1.5901
+  },
+  "FM": {
+   "class": "gated",
+   "documents": 11118629,
+   "own_share": 0.4705,
+   "inhabitants": 99603,
+   "per_inhabitant": 111.6295,
+   "local_documents": 0,
+   "local_per_inhabitant": 0.0,
+   "local_languages": []
+  },
+  "FO": {
+   "class": "national",
+   "documents": 382656,
+   "own_share": 0.7988,
+   "inhabitants": 52933,
+   "per_inhabitant": 7.2291
+  },
+  "FR": {
+   "class": "national",
+   "documents": 303635775,
+   "own_share": 0.9803,
+   "inhabitants": 68374600,
+   "per_inhabitant": 4.4408
+  },
+  "GA": {
+   "class": "gated",
+   "documents": 3337117,
+   "own_share": 0.111,
+   "inhabitants": 2455110,
+   "per_inhabitant": 1.3593,
+   "local_documents": 370459,
+   "local_per_inhabitant": 0.1509,
+   "local_languages": [
+    "fra"
+   ]
+  },
+  "GB": {
+   "class": "national",
+   "documents": 395470408,
+   "own_share": 0.987,
+   "inhabitants": 68459100,
+   "per_inhabitant": 5.7767
+  },
+  "GD": {
+   "class": "gated",
+   "documents": 106824,
+   "own_share": 0.4607,
+   "inhabitants": 114621,
+   "per_inhabitant": 0.932,
+   "local_documents": 0,
+   "local_per_inhabitant": 0.0,
+   "local_languages": []
+  },
+  "GE": {
+   "class": "national",
+   "documents": 6639550,
+   "own_share": 0.8201,
+   "inhabitants": 4900960,
+   "per_inhabitant": 1.3547
+  },
+  "GF": {
+   "class": "national",
+   "documents": 10866,
+   "own_share": 0.9295,
+   "inhabitants": 199509,
+   "per_inhabitant": 0.0545
+  },
+  "GG": {
+   "class": "national",
+   "documents": 1684928,
+   "own_share": 0.7041,
+   "inhabitants": 67787,
+   "per_inhabitant": 24.8562
+  },
+  "GH": {
+   "class": "national",
+   "documents": 1268465,
+   "own_share": 0.9868,
+   "inhabitants": 34589100,
+   "per_inhabitant": 0.0367
+  },
+  "GI": {
+   "class": "national",
+   "documents": 124397,
+   "own_share": 0.9712,
+   "inhabitants": 29683,
+   "per_inhabitant": 4.1908
+  },
+  "GL": {
+   "class": "gated",
+   "documents": 179772,
+   "own_share": 0.4007,
+   "inhabitants": 57751,
+   "per_inhabitant": 3.1129,
+   "local_documents": 72031,
+   "local_per_inhabitant": 1.2473,
+   "local_languages": [
+    "dan"
+   ]
+  },
+  "GM": {
+   "class": "national",
+   "documents": 181486,
+   "own_share": 0.9763,
+   "inhabitants": 2523330,
+   "per_inhabitant": 0.0719
+  },
+  "GN": {
+   "class": "national",
+   "documents": 18666,
+   "own_share": 0.7958,
+   "inhabitants": 13986200,
+   "per_inhabitant": 0.0013
+  },
+  "GP": {
+   "class": "gated",
+   "documents": 63791,
+   "own_share": 0.4708,
+   "inhabitants": 452776,
+   "per_inhabitant": 0.1409,
+   "local_documents": 30035,
+   "local_per_inhabitant": 0.0663,
+   "local_languages": [
+    "fra"
+   ]
+  },
+  "GQ": {
+   "class": "gated",
+   "documents": 2807656,
+   "own_share": 0.1445,
+   "inhabitants": 1795830,
+   "per_inhabitant": 1.5634,
+   "local_documents": 405619,
+   "local_per_inhabitant": 0.2259,
+   "local_languages": [
+    "fra",
+    "spa"
+   ]
+  },
+  "GR": {
+   "class": "national",
+   "documents": 72255412,
+   "own_share": 0.9846,
+   "inhabitants": 10461100,
+   "per_inhabitant": 6.9071
+  },
+  "GS": {
+   "class": "gated",
+   "documents": 147325,
+   "own_share": 0.5097,
+   "inhabitants": 20,
+   "per_inhabitant": 7366.25,
+   "local_documents": 0,
+   "local_per_inhabitant": 0.0,
+   "local_languages": []
+  },
+  "GT": {
+   "class": "national",
+   "documents": 1778590,
+   "own_share": 0.949,
+   "inhabitants": 18255200,
+   "per_inhabitant": 0.0974
+  },
+  "GU": {
+   "class": "national",
+   "documents": 1449,
+   "own_share": 0.989,
+   "inhabitants": 169532,
+   "per_inhabitant": 0.0085
+  },
+  "GW": {
+   "class": "national",
+   "documents": 12069,
+   "own_share": 0.7915,
+   "inhabitants": 2132330,
+   "per_inhabitant": 0.0057
+  },
+  "GY": {
+   "class": "national",
+   "documents": 238187,
+   "own_share": 0.9456,
+   "inhabitants": 794099,
+   "per_inhabitant": 0.2999
+  },
+  "HK": {
+   "class": "national",
+   "documents": 10167455,
+   "own_share": 0.9576,
+   "inhabitants": 7297820,
+   "per_inhabitant": 1.3932
+  },
+  "HM": {
+   "class": "gated",
+   "documents": 22196,
+   "own_share": 0.0,
+   "inhabitants": 1,
+   "per_inhabitant": 22196.0,
+   "local_documents": 0,
+   "local_per_inhabitant": 0.0,
+   "local_languages": []
+  },
+  "HN": {
+   "class": "national",
+   "documents": 2061640,
+   "own_share": 0.9797,
+   "inhabitants": 9529190,
+   "per_inhabitant": 0.2163
+  },
+  "HR": {
+   "class": "national",
+   "documents": 10915950,
+   "own_share": 0.9607,
+   "inhabitants": 4150120,
+   "per_inhabitant": 2.6303
+  },
+  "HT": {
+   "class": "gated",
+   "documents": 242024,
+   "own_share": 0.4726,
+   "inhabitants": 11753900,
+   "per_inhabitant": 0.0206,
+   "local_documents": 114387,
+   "local_per_inhabitant": 0.0097,
+   "local_languages": [
+    "fra",
+    "hat"
+   ]
+  },
+  "HU": {
+   "class": "national",
+   "documents": 66114185,
+   "own_share": 0.9876,
+   "inhabitants": 9855750,
+   "per_inhabitant": 6.7082
+  },
+  "ID": {
+   "class": "national",
+   "documents": 48976459,
+   "own_share": 0.8277,
+   "inhabitants": 281562000,
+   "per_inhabitant": 0.1739
+  },
+  "IE": {
+   "class": "national",
+   "documents": 28071590,
+   "own_share": 0.9799,
+   "inhabitants": 5233460,
+   "per_inhabitant": 5.3639
+  },
+  "IL": {
+   "class": "national",
+   "documents": 26464601,
+   "own_share": 0.9652,
+   "inhabitants": 9402620,
+   "per_inhabitant": 2.8146
+  },
+  "IM": {
+   "class": "national",
+   "documents": 821555,
+   "own_share": 0.5413,
+   "inhabitants": 92269,
+   "per_inhabitant": 8.9039
+  },
+  "IN": {
+   "class": "national",
+   "documents": 102119316,
+   "own_share": 0.9211,
+   "inhabitants": 1409130000,
+   "per_inhabitant": 0.0725
+  },
+  "IO": {
+   "class": "gated",
+   "documents": 32693532,
+   "own_share": 0.7432,
+   "inhabitants": 3500,
+   "per_inhabitant": 9341.0091,
+   "local_documents": 0,
+   "local_per_inhabitant": 0.0,
+   "local_languages": []
+  },
+  "IQ": {
+   "class": "national",
+   "documents": 716426,
+   "own_share": 0.9855,
+   "inhabitants": 42083400,
+   "per_inhabitant": 0.017
+  },
+  "IR": {
+   "class": "national",
+   "documents": 67353841,
+   "own_share": 0.931,
+   "inhabitants": 88386900,
+   "per_inhabitant": 0.762
+  },
+  "IS": {
+   "class": "national",
+   "documents": 6411704,
+   "own_share": 0.5457,
+   "inhabitants": 364036,
+   "per_inhabitant": 17.6128
+  },
+  "IT": {
+   "class": "national",
+   "documents": 261072911,
+   "own_share": 0.9755,
+   "inhabitants": 60964900,
+   "per_inhabitant": 4.2823
+  },
+  "JE": {
+   "class": "national",
+   "documents": 295492,
+   "own_share": 0.7538,
+   "inhabitants": 103387,
+   "per_inhabitant": 2.8581
+  },
+  "JM": {
+   "class": "national",
+   "documents": 286910,
+   "own_share": 0.992,
+   "inhabitants": 2823710,
+   "per_inhabitant": 0.1016
+  },
+  "JO": {
+   "class": "national",
+   "documents": 449301,
+   "own_share": 0.9815,
+   "inhabitants": 11174000,
+   "per_inhabitant": 0.0402
+  },
+  "JP": {
+   "class": "national",
+   "documents": 299746677,
+   "own_share": 0.9616,
+   "inhabitants": 123202000,
+   "per_inhabitant": 2.433
+  },
+  "KE": {
+   "class": "national",
+   "documents": 6315467,
+   "own_share": 0.9657,
+   "inhabitants": 58246400,
+   "per_inhabitant": 0.1084
+  },
+  "KG": {
+   "class": "national",
+   "documents": 4477025,
+   "own_share": 0.9542,
+   "inhabitants": 6172100,
+   "per_inhabitant": 0.7254
+  },
+  "KH": {
+   "class": "gated",
+   "documents": 221999,
+   "own_share": 0.2218,
+   "inhabitants": 17063700,
+   "per_inhabitant": 0.013,
+   "local_documents": 49246,
+   "local_per_inhabitant": 0.0029,
+   "local_languages": [
+    "khm"
+   ]
+  },
+  "KI": {
+   "class": "gated",
+   "documents": 21021,
+   "own_share": 0.2326,
+   "inhabitants": 116545,
+   "per_inhabitant": 0.1804,
+   "local_documents": 0,
+   "local_per_inhabitant": 0.0,
+   "local_languages": []
+  },
+  "KM": {
+   "class": "national",
+   "documents": 3567,
+   "own_share": 0.8626,
+   "inhabitants": 900141,
+   "per_inhabitant": 0.004
+  },
+  "KN": {
+   "class": "national",
+   "documents": 31085,
+   "own_share": 0.9808,
+   "inhabitants": 55133,
+   "per_inhabitant": 0.5638
+  },
+  "KP": {
+   "class": "gated",
+   "documents": 32101,
+   "own_share": 0.229,
+   "inhabitants": 26298700,
+   "per_inhabitant": 0.0012,
+   "local_documents": 7351,
+   "local_per_inhabitant": 0.0003,
+   "local_languages": [
+    "kor"
+   ]
+  },
+  "KR": {
+   "class": "national",
+   "documents": 33935334,
+   "own_share": 0.876,
+   "inhabitants": 52081800,
+   "per_inhabitant": 0.6516
+  },
+  "KW": {
+   "class": "gated",
+   "documents": 287048,
+   "own_share": 0.4051,
+   "inhabitants": 3138360,
+   "per_inhabitant": 0.0915,
+   "local_documents": 116288,
+   "local_per_inhabitant": 0.0371,
+   "local_languages": [
+    "ara"
+   ]
+  },
+  "KY": {
+   "class": "national",
+   "documents": 183429,
+   "own_share": 0.8896,
+   "inhabitants": 66653,
+   "per_inhabitant": 2.752
+  },
+  "KZ": {
+   "class": "national",
+   "documents": 29923060,
+   "own_share": 0.9904,
+   "inhabitants": 20260000,
+   "per_inhabitant": 1.477
+  },
+  "LA": {
+   "class": "gated",
+   "documents": 5665902,
+   "own_share": 0.0017,
+   "inhabitants": 7953560,
+   "per_inhabitant": 0.7124,
+   "local_documents": 9355,
+   "local_per_inhabitant": 0.0012,
+   "local_languages": [
+    "lao"
+   ]
+  },
+  "LB": {
+   "class": "national",
+   "documents": 978532,
+   "own_share": 0.9247,
+   "inhabitants": 5364480,
+   "per_inhabitant": 0.1824
+  },
+  "LC": {
+   "class": "gated",
+   "documents": 94719,
+   "own_share": 0.2046,
+   "inhabitants": 168038,
+   "per_inhabitant": 0.5637,
+   "local_documents": 0,
+   "local_per_inhabitant": 0.0,
+   "local_languages": []
+  },
+  "LI": {
+   "class": "gated",
+   "documents": 1292208,
+   "own_share": 0.396,
+   "inhabitants": 40272,
+   "per_inhabitant": 32.087,
+   "local_documents": 511686,
+   "local_per_inhabitant": 12.7058,
+   "local_languages": [
+    "deu"
+   ]
+  },
+  "LK": {
+   "class": "national",
+   "documents": 3504816,
+   "own_share": 0.9681,
+   "inhabitants": 21982600,
+   "per_inhabitant": 0.1594
+  },
+  "LR": {
+   "class": "national",
+   "documents": 28269,
+   "own_share": 0.9984,
+   "inhabitants": 5437250,
+   "per_inhabitant": 0.0052
+  },
+  "LS": {
+   "class": "national",
+   "documents": 274011,
+   "own_share": 0.9716,
+   "inhabitants": 2227550,
+   "per_inhabitant": 0.123
+  },
+  "LT": {
+   "class": "national",
+   "documents": 20733155,
+   "own_share": 0.9655,
+   "inhabitants": 2628190,
+   "per_inhabitant": 7.8888
+  },
+  "LU": {
+   "class": "national",
+   "documents": 4105785,
+   "own_share": 0.9684,
+   "inhabitants": 671254,
+   "per_inhabitant": 6.1166
+  },
+  "LV": {
+   "class": "national",
+   "documents": 12813567,
+   "own_share": 0.9841,
+   "inhabitants": 1801250,
+   "per_inhabitant": 7.1137
+  },
+  "LY": {
+   "class": "gated",
+   "documents": 1485515,
+   "own_share": 0.2639,
+   "inhabitants": 7361260,
+   "per_inhabitant": 0.2018,
+   "local_documents": 392012,
+   "local_per_inhabitant": 0.0533,
+   "local_languages": [
+    "ara"
+   ]
+  },
+  "MA": {
+   "class": "national",
+   "documents": 6836075,
+   "own_share": 0.9168,
+   "inhabitants": 37387600,
+   "per_inhabitant": 0.1828
+  },
+  "MC": {
+   "class": "national",
+   "documents": 354312,
+   "own_share": 0.7009,
+   "inhabitants": 31813,
+   "per_inhabitant": 11.1373
+  },
+  "MD": {
+   "class": "national",
+   "documents": 7138965,
+   "own_share": 0.9004,
+   "inhabitants": 3599530,
+   "per_inhabitant": 1.9833
+  },
+  "ME": {
+   "class": "gated",
+   "documents": 34302385,
+   "own_share": 0.0407,
+   "inhabitants": 599849,
+   "per_inhabitant": 57.185,
+   "local_documents": 1395531,
+   "local_per_inhabitant": 2.3265,
+   "local_languages": [
+    "bos",
+    "srp",
+    "hrv",
+    "als"
+   ]
+  },
+  "MG": {
+   "class": "gated",
+   "documents": 751978,
+   "own_share": 0.4512,
+   "inhabitants": 29452700,
+   "per_inhabitant": 0.0255,
+   "local_documents": 310043,
+   "local_per_inhabitant": 0.0105,
+   "local_languages": [
+    "fra",
+    "plt"
+   ]
+  },
+  "MH": {
+   "class": "national",
+   "documents": 172,
+   "own_share": 1.0,
+   "inhabitants": 82011,
+   "per_inhabitant": 0.0021
+  },
+  "MK": {
+   "class": "national",
+   "documents": 6773172,
+   "own_share": 0.881,
+   "inhabitants": 2135620,
+   "per_inhabitant": 3.1715
+  },
+  "ML": {
+   "class": "gated",
+   "documents": 2417217,
+   "own_share": 0.1576,
+   "inhabitants": 21990600,
+   "per_inhabitant": 0.1099,
+   "local_documents": 380854,
+   "local_per_inhabitant": 0.0173,
+   "local_languages": [
+    "fra",
+    "bam"
+   ]
+  },
+  "MM": {
+   "class": "national",
+   "documents": 438113,
+   "own_share": 0.5524,
+   "inhabitants": 57527100,
+   "per_inhabitant": 0.0076
+  },
+  "MN": {
+   "class": "national",
+   "documents": 2598941,
+   "own_share": 0.8073,
+   "inhabitants": 3281680,
+   "per_inhabitant": 0.792
+  },
+  "MO": {
+   "class": "national",
+   "documents": 495617,
+   "own_share": 0.9939,
+   "inhabitants": 644426,
+   "per_inhabitant": 0.7691
+  },
+  "MP": {
+   "class": "national",
+   "documents": 10166,
+   "own_share": 0.8245,
+   "inhabitants": 51118,
+   "per_inhabitant": 0.1989
+  },
+  "MQ": {
+   "class": "national",
+   "documents": 42396,
+   "own_share": 0.9221,
+   "inhabitants": 436131,
+   "per_inhabitant": 0.0972
+  },
+  "MR": {
+   "class": "national",
+   "documents": 153992,
+   "own_share": 0.8864,
+   "inhabitants": 4328040,
+   "per_inhabitant": 0.0356
+  },
+  "MS": {
+   "class": "gated",
+   "documents": 384224,
+   "own_share": 0.3791,
+   "inhabitants": 5468,
+   "per_inhabitant": 70.2677,
+   "local_documents": 0,
+   "local_per_inhabitant": 0.0,
+   "local_languages": []
+  },
+  "MT": {
+   "class": "national",
+   "documents": 1202822,
+   "own_share": 0.9764,
+   "inhabitants": 469730,
+   "per_inhabitant": 2.5607
+  },
+  "MU": {
+   "class": "national",
+   "documents": 897036,
+   "own_share": 0.6625,
+   "inhabitants": 1310500,
+   "per_inhabitant": 0.6845
+  },
+  "MV": {
+   "class": "national",
+   "documents": 240006,
+   "own_share": 0.9641,
+   "inhabitants": 388858,
+   "per_inhabitant": 0.6172
+  },
+  "MW": {
+   "class": "national",
+   "documents": 137955,
+   "own_share": 0.7677,
+   "inhabitants": 21763300,
+   "per_inhabitant": 0.0063
+  },
+  "MX": {
+   "class": "national",
+   "documents": 63803828,
+   "own_share": 0.9879,
+   "inhabitants": 130740000,
+   "per_inhabitant": 0.488
+  },
+  "MY": {
+   "class": "national",
+   "documents": 14034953,
+   "own_share": 0.9737,
+   "inhabitants": 34564800,
+   "per_inhabitant": 0.406
+  },
+  "MZ": {
+   "class": "national",
+   "documents": 451053,
+   "own_share": 0.8118,
+   "inhabitants": 33351000,
+   "per_inhabitant": 0.0135
+  },
+  "NA": {
+   "class": "national",
+   "documents": 500438,
+   "own_share": 0.9095,
+   "inhabitants": 2803660,
+   "per_inhabitant": 0.1785
+  },
+  "NC": {
+   "class": "national",
+   "documents": 362731,
+   "own_share": 0.9548,
+   "inhabitants": 304167,
+   "per_inhabitant": 1.1925
+  },
+  "NE": {
+   "class": "national",
+   "documents": 45208,
+   "own_share": 0.7477,
+   "inhabitants": 26342800,
+   "per_inhabitant": 0.0017
+  },
+  "NF": {
+   "class": "gated",
+   "documents": 32112,
+   "own_share": 0.4328,
+   "inhabitants": 1748,
+   "per_inhabitant": 18.3707,
+   "local_documents": 0,
+   "local_per_inhabitant": 0.0,
+   "local_languages": []
+  },
+  "NG": {
+   "class": "national",
+   "documents": 15932597,
+   "own_share": 0.9808,
+   "inhabitants": 236747000,
+   "per_inhabitant": 0.0673
+  },
+  "NI": {
+   "class": "national",
+   "documents": 1942379,
+   "own_share": 0.9547,
+   "inhabitants": 6676950,
+   "per_inhabitant": 0.2909
+  },
+  "NL": {
+   "class": "national",
+   "documents": 182902034,
+   "own_share": 0.9525,
+   "inhabitants": 17772400,
+   "per_inhabitant": 10.2914
+  },
+  "NO": {
+   "class": "national",
+   "documents": 32285889,
+   "own_share": 0.8129,
+   "inhabitants": 5509730,
+   "per_inhabitant": 5.8598
+  },
+  "NP": {
+   "class": "national",
+   "documents": 1168255,
+   "own_share": 0.9395,
+   "inhabitants": 31122400,
+   "per_inhabitant": 0.0375
+  },
+  "NR": {
+   "class": "national",
+   "documents": 3449,
+   "own_share": 0.8689,
+   "inhabitants": 9892,
+   "per_inhabitant": 0.3487
+  },
+  "NU": {
+   "class": "gated",
+   "documents": 7061103,
+   "own_share": 0.2455,
+   "inhabitants": 2000,
+   "per_inhabitant": 3530.5515,
+   "local_documents": 0,
+   "local_per_inhabitant": 0.0,
+   "local_languages": []
+  },
+  "NZ": {
+   "class": "national",
+   "documents": 34988697,
+   "own_share": 0.9858,
+   "inhabitants": 5161210,
+   "per_inhabitant": 6.7792
+  },
+  "OM": {
+   "class": "gated",
+   "documents": 344983,
+   "own_share": 0.4842,
+   "inhabitants": 3901990,
+   "per_inhabitant": 0.0884,
+   "local_documents": 167039,
+   "local_per_inhabitant": 0.0428,
+   "local_languages": [
+    "ara"
+   ]
+  },
+  "PA": {
+   "class": "national",
+   "documents": 1738018,
+   "own_share": 0.9916,
+   "inhabitants": 4470240,
+   "per_inhabitant": 0.3888
+  },
+  "PE": {
+   "class": "national",
+   "documents": 16985086,
+   "own_share": 0.9327,
+   "inhabitants": 32600200,
+   "per_inhabitant": 0.521
+  },
+  "PF": {
+   "class": "national",
+   "documents": 289173,
+   "own_share": 0.9022,
+   "inhabitants": 303540,
+   "per_inhabitant": 0.9527
+  },
+  "PG": {
+   "class": "national",
+   "documents": 214153,
+   "own_share": 0.9877,
+   "inhabitants": 10046200,
+   "per_inhabitant": 0.0213
+  },
+  "PH": {
+   "class": "national",
+   "documents": 10314441,
+   "own_share": 0.9221,
+   "inhabitants": 118277000,
+   "per_inhabitant": 0.0872
+  },
+  "PK": {
+   "class": "national",
+   "documents": 13538201,
+   "own_share": 0.9646,
+   "inhabitants": 252364000,
+   "per_inhabitant": 0.0536
+  },
+  "PL": {
+   "class": "national",
+   "documents": 267926147,
+   "own_share": 0.9368,
+   "inhabitants": 38746300,
+   "per_inhabitant": 6.9149
+  },
+  "PM": {
+   "class": "gated",
+   "documents": 225482,
+   "own_share": 0.5254,
+   "inhabitants": 5132,
+   "per_inhabitant": 43.9365,
+   "local_documents": 10265,
+   "local_per_inhabitant": 2.0002,
+   "local_languages": [
+    "fra"
+   ]
+  },
+  "PN": {
+   "class": "gated",
+   "documents": 121445,
+   "own_share": 0.1834,
+   "inhabitants": 50,
+   "per_inhabitant": 2428.9,
+   "local_documents": 0,
+   "local_per_inhabitant": 0.0,
+   "local_languages": []
+  },
+  "PR": {
+   "class": "national",
+   "documents": 539254,
+   "own_share": 0.9915,
+   "inhabitants": 3019450,
+   "per_inhabitant": 0.1786
+  },
+  "PS": {
+   "class": "national",
+   "documents": 1353826,
+   "own_share": 0.8072,
+   "inhabitants": 5385010,
+   "per_inhabitant": 0.2514
+  },
+  "PT": {
+   "class": "national",
+   "documents": 35246358,
+   "own_share": 0.9411,
+   "inhabitants": 10207200,
+   "per_inhabitant": 3.4531
+  },
+  "PW": {
+   "class": "gated",
+   "documents": 3705069,
+   "own_share": 0.4229,
+   "inhabitants": 21864,
+   "per_inhabitant": 169.4598,
+   "local_documents": 0,
+   "local_per_inhabitant": 0.0,
+   "local_languages": []
+  },
+  "PY": {
+   "class": "national",
+   "documents": 2584370,
+   "own_share": 0.9498,
+   "inhabitants": 7522550,
+   "per_inhabitant": 0.3435
+  },
+  "QA": {
+   "class": "gated",
+   "documents": 861263,
+   "own_share": 0.2118,
+   "inhabitants": 2552090,
+   "per_inhabitant": 0.3375,
+   "local_documents": 182458,
+   "local_per_inhabitant": 0.0715,
+   "local_languages": [
+    "ara",
+    "fas"
+   ]
+  },
+  "RE": {
+   "class": "national",
+   "documents": 1400750,
+   "own_share": 0.6507,
+   "inhabitants": 787584,
+   "per_inhabitant": 1.7785
+  },
+  "RO": {
+   "class": "national",
+   "documents": 85177518,
+   "own_share": 0.9836,
+   "inhabitants": 18148200,
+   "per_inhabitant": 4.6934
+  },
+  "RS": {
+   "class": "national",
+   "documents": 7669123,
+   "own_share": 0.7342,
+   "inhabitants": 6652210,
+   "per_inhabitant": 1.1529
+  },
+  "RU": {
+   "class": "national",
+   "documents": 1092750683,
+   "own_share": 0.9582,
+   "inhabitants": 140821000,
+   "per_inhabitant": 7.7599
+  },
+  "RW": {
+   "class": "national",
+   "documents": 461882,
+   "own_share": 0.9476,
+   "inhabitants": 13623300,
+   "per_inhabitant": 0.0339
+  },
+  "SA": {
+   "class": "national",
+   "documents": 2578374,
+   "own_share": 0.5313,
+   "inhabitants": 36544400,
+   "per_inhabitant": 0.0706
+  },
+  "SB": {
+   "class": "national",
+   "documents": 102186,
+   "own_share": 0.7326,
+   "inhabitants": 726799,
+   "per_inhabitant": 0.1406
+  },
+  "SC": {
+   "class": "gated",
+   "documents": 1353697,
+   "own_share": 0.1335,
+   "inhabitants": 98187,
+   "per_inhabitant": 13.7869,
+   "local_documents": 6920,
+   "local_per_inhabitant": 0.0705,
+   "local_languages": [
+    "fra"
+   ]
+  },
+  "SD": {
+   "class": "national",
+   "documents": 114247,
+   "own_share": 0.9214,
+   "inhabitants": 50467300,
+   "per_inhabitant": 0.0023
+  },
+  "SE": {
+   "class": "national",
+   "documents": 79262961,
+   "own_share": 0.9595,
+   "inhabitants": 10589800,
+   "per_inhabitant": 7.4848
+  },
+  "SG": {
+   "class": "national",
+   "documents": 12927811,
+   "own_share": 0.9719,
+   "inhabitants": 6028460,
+   "per_inhabitant": 2.1445
+  },
+  "SH": {
+   "class": "gated",
+   "documents": 389505,
+   "own_share": 0.5726,
+   "inhabitants": 7943,
+   "per_inhabitant": 49.0375,
+   "local_documents": 0,
+   "local_per_inhabitant": 0.0,
+   "local_languages": []
+  },
+  "SI": {
+   "class": "national",
+   "documents": 12924811,
+   "own_share": 0.9646,
+   "inhabitants": 2097890,
+   "per_inhabitant": 6.1609
+  },
+  "SK": {
+   "class": "national",
+   "documents": 34040432,
+   "own_share": 0.9812,
+   "inhabitants": 5563650,
+   "per_inhabitant": 6.1184
+  },
+  "SL": {
+   "class": "national",
+   "documents": 92565,
+   "own_share": 0.9119,
+   "inhabitants": 9121050,
+   "per_inhabitant": 0.0101
+  },
+  "SM": {
+   "class": "national",
+   "documents": 309688,
+   "own_share": 0.847,
+   "inhabitants": 35095,
+   "per_inhabitant": 8.8243
+  },
+  "SN": {
+   "class": "national",
+   "documents": 886497,
+   "own_share": 0.9005,
+   "inhabitants": 18847500,
+   "per_inhabitant": 0.047
+  },
+  "SO": {
+   "class": "gated",
+   "documents": 915142,
+   "own_share": 0.0539,
+   "inhabitants": 13017300,
+   "per_inhabitant": 0.0703,
+   "local_documents": 49364,
+   "local_per_inhabitant": 0.0038,
+   "local_languages": [
+    "som",
+    "ara",
+    "swh"
+   ]
+  },
+  "SR": {
+   "class": "national",
+   "documents": 92225,
+   "own_share": 0.7281,
+   "inhabitants": 646758,
+   "per_inhabitant": 0.1426
+  },
+  "SS": {
+   "class": "national",
+   "documents": 15455,
+   "own_share": 0.8932,
+   "inhabitants": 12703700,
+   "per_inhabitant": 0.0012
+  },
+  "ST": {
+   "class": "gated",
+   "documents": 833734,
+   "own_share": 0.0652,
+   "inhabitants": 223561,
+   "per_inhabitant": 3.7293,
+   "local_documents": 54362,
+   "local_per_inhabitant": 0.2432,
+   "local_languages": [
+    "fra",
+    "por"
+   ]
+  },
+  "SV": {
+   "class": "national",
+   "documents": 1164620,
+   "own_share": 0.901,
+   "inhabitants": 6628700,
+   "per_inhabitant": 0.1757
+  },
+  "SX": {
+   "class": "gated",
+   "documents": 208917,
+   "own_share": 0.4514,
+   "inhabitants": 46215,
+   "per_inhabitant": 4.5205,
+   "local_documents": 3759,
+   "local_per_inhabitant": 0.0813,
+   "local_languages": [
+    "spa",
+    "nld"
+   ]
+  },
+  "SY": {
+   "class": "national",
+   "documents": 940918,
+   "own_share": 0.6765,
+   "inhabitants": 23865400,
+   "per_inhabitant": 0.0394
+  },
+  "SZ": {
+   "class": "national",
+   "documents": 39094,
+   "own_share": 0.9545,
+   "inhabitants": 1138090,
+   "per_inhabitant": 0.0344
+  },
+  "TC": {
+   "class": "gated",
+   "documents": 335619,
+   "own_share": 0.2235,
+   "inhabitants": 60439,
+   "per_inhabitant": 5.553,
+   "local_documents": 0,
+   "local_per_inhabitant": 0.0,
+   "local_languages": []
+  },
+  "TD": {
+   "class": "national",
+   "documents": 26277,
+   "own_share": 0.8986,
+   "inhabitants": 19093600,
+   "per_inhabitant": 0.0014
+  },
+  "TF": {
+   "class": "gated",
+   "documents": 73034,
+   "own_share": 0.0519,
+   "inhabitants": 140,
+   "per_inhabitant": 521.6714,
+   "local_documents": 3791,
+   "local_per_inhabitant": 27.0786,
+   "local_languages": [
+    "fra"
+   ]
+  },
+  "TG": {
+   "class": "national",
+   "documents": 294049,
+   "own_share": 0.9131,
+   "inhabitants": 8917990,
+   "per_inhabitant": 0.033
+  },
+  "TH": {
+   "class": "national",
+   "documents": 6337137,
+   "own_share": 0.9401,
+   "inhabitants": 69921000,
+   "per_inhabitant": 0.0906
+  },
+  "TJ": {
+   "class": "national",
+   "documents": 1097703,
+   "own_share": 0.9025,
+   "inhabitants": 10394100,
+   "per_inhabitant": 0.1056
+  },
+  "TK": {
+   "class": "gated",
+   "documents": 12727613,
+   "own_share": 0.5392,
+   "inhabitants": 1647,
+   "per_inhabitant": 7727.7553,
+   "local_documents": 12,
+   "local_per_inhabitant": 0.0073,
+   "local_languages": [
+    "smo"
+   ]
+  },
+  "TL": {
+   "class": "gated",
+   "documents": 441879,
+   "own_share": 0.0499,
+   "inhabitants": 1506910,
+   "per_inhabitant": 0.2932,
+   "local_documents": 22067,
+   "local_per_inhabitant": 0.0146,
+   "local_languages": [
+    "por"
+   ]
+  },
+  "TM": {
+   "class": "national",
+   "documents": 435502,
+   "own_share": 0.5829,
+   "inhabitants": 5744150,
+   "per_inhabitant": 0.0758
+  },
+  "TN": {
+   "class": "national",
+   "documents": 2190166,
+   "own_share": 0.8136,
+   "inhabitants": 12048800,
+   "per_inhabitant": 0.1818
+  },
+  "TO": {
+   "class": "gated",
+   "documents": 3846838,
+   "own_share": 0.5176,
+   "inhabitants": 104889,
+   "per_inhabitant": 36.6753,
+   "local_documents": 0,
+   "local_per_inhabitant": 0.0,
+   "local_languages": []
+  },
+  "TR": {
+   "class": "national",
+   "documents": 38397874,
+   "own_share": 0.9681,
+   "inhabitants": 84119500,
+   "per_inhabitant": 0.4565
+  },
+  "TT": {
+   "class": "national",
+   "documents": 348170,
+   "own_share": 0.8988,
+   "inhabitants": 1408970,
+   "per_inhabitant": 0.2471
+  },
+  "TV": {
+   "class": "gated",
+   "documents": 41112963,
+   "own_share": 0.2724,
+   "inhabitants": 11733,
+   "per_inhabitant": 3504.0453,
+   "local_documents": 0,
+   "local_per_inhabitant": 0.0,
+   "local_languages": []
+  },
+  "TW": {
+   "class": "national",
+   "documents": 32240440,
+   "own_share": 0.7967,
+   "inhabitants": 23595300,
+   "per_inhabitant": 1.3664
+  },
+  "TZ": {
+   "class": "national",
+   "documents": 1004852,
+   "own_share": 0.9539,
+   "inhabitants": 67462100,
+   "per_inhabitant": 0.0149
+  },
+  "UA": {
+   "class": "national",
+   "documents": 171434035,
+   "own_share": 0.9695,
+   "inhabitants": 35661800,
+   "per_inhabitant": 4.8072
+  },
+  "UG": {
+   "class": "national",
+   "documents": 1568372,
+   "own_share": 0.9754,
+   "inhabitants": 49283000,
+   "per_inhabitant": 0.0318
+  },
+  "US": {
+   "class": "national",
+   "documents": 42138522,
+   "own_share": 0.9054,
+   "inhabitants": 341963000,
+   "per_inhabitant": 0.1232
+  },
+  "UY": {
+   "class": "national",
+   "documents": 5592093,
+   "own_share": 0.943,
+   "inhabitants": 3425330,
+   "per_inhabitant": 1.6326
+  },
+  "UZ": {
+   "class": "national",
+   "documents": 4427526,
+   "own_share": 0.907,
+   "inhabitants": 36520600,
+   "per_inhabitant": 0.1212
+  },
+  "VA": {
+   "class": "gated",
+   "documents": 793400,
+   "own_share": 0.1862,
+   "inhabitants": 1000,
+   "per_inhabitant": 793.4,
+   "local_documents": 147692,
+   "local_per_inhabitant": 147.692,
+   "local_languages": []
+  },
+  "VC": {
+   "class": "national",
+   "documents": 700828,
+   "own_share": 0.6084,
+   "inhabitants": 100647,
+   "per_inhabitant": 6.9632
+  },
+  "VE": {
+   "class": "national",
+   "documents": 5315871,
+   "own_share": 0.9472,
+   "inhabitants": 31250300,
+   "per_inhabitant": 0.1701
+  },
+  "VG": {
+   "class": "gated",
+   "documents": 320831,
+   "own_share": 0.251,
+   "inhabitants": 40102,
+   "per_inhabitant": 8.0004,
+   "local_documents": 0,
+   "local_per_inhabitant": 0.0,
+   "local_languages": []
+  },
+  "VI": {
+   "class": "national",
+   "documents": 15966,
+   "own_share": 0.9106,
+   "inhabitants": 104377,
+   "per_inhabitant": 0.153
+  },
+  "VN": {
+   "class": "national",
+   "documents": 79859671,
+   "own_share": 0.8965,
+   "inhabitants": 105759000,
+   "per_inhabitant": 0.7551
+  },
+  "VU": {
+   "class": "national",
+   "documents": 190003,
+   "own_share": 0.8616,
+   "inhabitants": 318007,
+   "per_inhabitant": 0.5975
+  },
+  "WF": {
+   "class": "gated",
+   "documents": 33966,
+   "own_share": 0.2514,
+   "inhabitants": 15964,
+   "per_inhabitant": 2.1277,
+   "local_documents": 8539,
+   "local_per_inhabitant": 0.5349,
+   "local_languages": [
+    "fra"
+   ]
+  },
+  "WS": {
+   "class": "gated",
+   "documents": 4541405,
+   "own_share": 0.3285,
+   "inhabitants": 208853,
+   "per_inhabitant": 21.7445,
+   "local_documents": 2787,
+   "local_per_inhabitant": 0.0133,
+   "local_languages": [
+    "smo"
+   ]
+  },
+  "YE": {
+   "class": "national",
+   "documents": 370976,
+   "own_share": 0.9143,
+   "inhabitants": 32140400,
+   "per_inhabitant": 0.0115
+  },
+  "YT": {
+   "class": "national",
+   "documents": 90958,
+   "own_share": 0.5652,
+   "inhabitants": 194000,
+   "per_inhabitant": 0.4689
+  },
+  "ZA": {
+   "class": "national",
+   "documents": 36625373,
+   "own_share": 0.9601,
+   "inhabitants": 60442600,
+   "per_inhabitant": 0.606
+  },
+  "ZM": {
+   "class": "national",
+   "documents": 198171,
+   "own_share": 0.9453,
+   "inhabitants": 20799100,
+   "per_inhabitant": 0.0095
+  },
+  "ZW": {
+   "class": "national",
+   "documents": 1534949,
+   "own_share": 0.9723,
+   "inhabitants": 17150400,
+   "per_inhabitant": 0.0895
+  }
+ }
+}

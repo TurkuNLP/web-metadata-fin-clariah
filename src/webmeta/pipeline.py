@@ -27,7 +27,7 @@ def annotate(record, threshold=None):
     meta.update(_language.annotate(record) if "language" not in gone
                 else {"lang": None, "languages": [], "multilingual": False})
     meta.update(_country.annotate(record) if "country" not in gone
-                else {"tld": None, "country": None, "country_name": None,
+                else {"tld": None, "country": None, "tld_use": None, "country_name": None,
                       "region": None, "subregion": None})
     meta.update(_register.annotate(record, threshold) if "register" not in gone
                 else {"registers": [], "hybrid": False, "threshold": None})

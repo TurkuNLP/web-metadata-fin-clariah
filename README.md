@@ -81,7 +81,7 @@ On LUMI, webmeta runs on validated samples published by [`hplt-sampler`](https:/
 | `lang` | language codes; `fi`, `fin` and `fin_Latn` are equivalent |
 | `any_segment` | match `lang` in any part of the document, not only its main language |
 | `multilingual` | `True`: only documents with two or more segment languages |
-| `country` | ISO 3166-1 codes from the top-level domain; generic domains give no country |
+| `country` | ISO 3166-1 codes from the top-level domain; generic domains give no country, and codes used worldwide only for local-language documents |
 | `region`, `subregion` | the country's UN region and subregion, e.g. `Europe`, `Northern Europe` |
 | `register` | register labels; a document matches if it has any of them |
 | `hybrid` | `True`: only documents with two or more main registers |
@@ -92,7 +92,16 @@ Every kept document gets a `meta` field with what webmeta derived; source fields
 
 ## Country and region
 
-The country comes from the URL: its top-level domain, if that is a country code (`yle.fi` → `FI`, `bbc.co.uk` → `GB`). Generic domains (`.com`, `.org`, …) give no country, and neither do country codes sold worldwide as generic ones (`.io`, `.tv`, `.co`, …). The country is a signal, not a ground truth: a `.fi` site is usually Finnish, a `.com` site could be anywhere.
+The country comes from the URL: its top-level domain, if that is a country code (`yle.fi` → `FI`, `bbc.co.uk` → `GB`). Generic domains (`.com`, `.org`, …) give no country. The country is a signal, not a ground truth: a `.fi` site is usually Finnish, a `.com` site could be anywhere.
+
+**Country codes used worldwide.** Some country codes are sold as generic domains: a `.tv` site says little about Tuvalu. Which codes are used that way is measured from corpus counts, not listed by hand. Each code is one of two kinds:
+
+- **national:** every document gets the country (`.fi`, `.de`, `.is`, …);
+- **gated:** only a document in one of the country's own languages, other than English, gets the country. A Montenegrin page on `.me` is from Montenegro; an English one could be from anywhere. On `.co`, Spanish documents get Colombia.
+
+A code is national when (1) at least half of its documents are in the country's own languages (those spoken by at least 1% of its population, per Unicode CLDR, with the other members of a macrolanguage counted as the same language), and (2) it has at most 30 documents per inhabitant: national codes of large countries have about 1–10, codes sold worldwide hundreds or thousands. A gated code keeps nothing when even its local-language documents exceed 30 per inhabitant (`.tv`, `.io`, Malay on `.cc`).
+
+The classes ship with webmeta (`src/webmeta/data/cctld_use.json`), computed from HPLT 4.0: 7.0 billion documents on 242 country codes, of which 55 are gated. Each document's `meta` gets `tld_use` (`national` or `gated`). `webmeta cctld --code TV` shows a code's numbers; `webmeta cctld --counts FILE.csv` recomputes the classes from another corpus's counts (columns `tld`, `language`, `document_count`); `WEBMETA_CCTLD_USE` pins a table. Known limits: a language spoken across borders still counts as local (French on `.ga`, Serbian on `.me`), and real national codes where English dominates online lose their English documents (`.qa`, `.kw`).
 
 Each country is then placed from a country table: its name, UN region and subregion, a map point (longitude, latitude) and the languages spoken there with their population shares. Every document's `meta` gets `country`, `country_name`, `region` and `subregion`; `webmeta.geo.lookup("FI")` gives the whole row.
 
@@ -137,7 +146,7 @@ webmeta.export(sample, "out/", format="jsonl", dirs="{lang}")
 
 **Reproducible selection.** Each document gets a pseudo-random rank from the seed and its id, and each cell keeps its `n` lowest-ranked documents. The same settings give the same dataset however the input is ordered or split, and a smaller `n` gives a subset of a larger one.
 
-**Export.** `webmeta.export(sample, outdir, format=...)` writes the documents, always a `cells.tsv` (per cell: its population and how many were taken), and `webmeta.json` (the webmeta version, the selection and the country table used).
+**Export.** `webmeta.export(sample, outdir, format=...)` writes the documents, always a `cells.tsv` (per cell: its population and how many were taken), and `webmeta.json` (the webmeta version, the selection and the country tables used).
 
 | `format` | Output |
 |---|---|

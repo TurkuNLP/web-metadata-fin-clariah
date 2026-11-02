@@ -1,13 +1,15 @@
 """Country step: a country signal from the URL's top-level domain.
 
-First version. A country-code top-level domain (ccTLD)
-is read as the country; generic domains (.com, .org, ...) give no country.
-Some ccTLDs are marketed worldwide as generic ones (.io, .co, .tv, ...); they
-are treated as no country, because a .io site says little about Indian Ocean
-territory. The result is a signal, not a ground truth.
+A country-code top-level domain (ccTLD) is read as the country; generic
+domains (.com, .org, ...) give no country. Some ccTLDs are sold worldwide as
+generic ones (.tv, .io, .me): on those, only documents in the country's own
+languages get the country (``webmeta.cctld``, measured from corpus counts).
+The result is a signal, not a ground truth.
 """
 
 from urllib.parse import urlsplit
+
+from . import language as _language
 
 # ISO 3166-1 alpha-2 codes, all of which are also ccTLDs (lowercased).
 ISO_ALPHA2 = set("""
@@ -26,9 +28,6 @@ UZ VA VC VE VG VI VN VU WF WS YE YT ZA ZM ZW
 # ccTLDs whose code differs from the ISO code.
 TLD_TO_ISO = {"uk": "GB"}
 
-# ccTLDs commonly used as generic domains. Edit to taste.
-VANITY = {"io", "co", "tv", "me", "ai", "ly", "fm", "cc", "ws", "to", "gg", "sh", "am", "nu", "tk"}
-
 
 def tld(url):
     """The top-level domain of a URL, lowercased ('https://yle.fi/a' -> 'fi')."""
@@ -41,21 +40,38 @@ def tld(url):
     return host.rsplit(".", 1)[-1].lower()
 
 
-def country(url, vanity=VANITY):
-    """ISO 3166-1 alpha-2 country for a URL, or None when the domain names none."""
+def code(url):
+    """The ISO 3166-1 alpha-2 code a URL's domain names, or None ('https://yle.fi/a' -> 'FI')."""
     t = tld(url)
-    if not t or t in vanity:
+    if not t:
         return None
-    code = TLD_TO_ISO.get(t, t.upper())
-    return code if code in ISO_ALPHA2 else None
+    c = TLD_TO_ISO.get(t, t.upper())
+    return c if c in ISO_ALPHA2 else None
+
+
+def country(url, lang=None):
+    """The country of a document at ``url`` written in ``lang``, or None.
+
+    On a code used worldwide (``webmeta.cctld``), only a document in one of the
+    country's own languages gets the country; without ``lang`` it gets none.
+    """
+    from . import cctld
+    c = code(url)
+    if c is None:
+        return None
+    return c if cctld.gives_country(c, _language.base(lang) if lang else None) else None
 
 
 def annotate(record):
-    """tld, country, and from the country table (webmeta.geo): its name, UN region and subregion."""
-    from . import geo
-    code = country(record.get("url"))
-    row = geo.lookup(code) or {}
-    return {"tld": tld(record.get("url")), "country": code, "country_name": row.get("name"),
+    """tld, country (with how the code is used), and from the country table
+    (webmeta.geo): its name, UN region and subregion."""
+    from . import cctld, geo
+    url = record.get("url")
+    c = country(url, record.get("lang"))
+    row = geo.lookup(c) or {}
+    named = code(url)
+    use = cctld.use()["codes"].get(named, {}).get("class", "national") if named else None
+    return {"tld": tld(url), "country": c, "tld_use": use, "country_name": row.get("name"),
             "region": row.get("region"), "subregion": row.get("subregion")}
 
 
