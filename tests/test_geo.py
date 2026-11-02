@@ -41,6 +41,7 @@ def test_fresh_cache_is_used_without_rebuilding(monkeypatch, tmp_path):
 
 def test_old_cache_is_rebuilt(monkeypatch, tmp_path):
     d = _use_cache(monkeypatch, tmp_path, _table(geo.MAX_AGE_DAYS + 1, "old"))
+    monkeypatch.setattr(geo, "_can_rebuild", lambda: True)
     monkeypatch.setattr(geo, "build", lambda: _table(0, "new"))
     assert geo.lookup("FI")["name"] == "new" and geo.table_info()["loaded_from"]["how"] == "rebuilt"
     assert json.loads((d / geo.TABLE_NAME).read_text())["countries"]["FI"]["name"] == "new"
@@ -48,6 +49,7 @@ def test_old_cache_is_rebuilt(monkeypatch, tmp_path):
 
 def test_failed_rebuild_falls_back(monkeypatch, tmp_path):
     _use_cache(monkeypatch, tmp_path, _table(geo.MAX_AGE_DAYS + 1, "old"))
+    monkeypatch.setattr(geo, "_can_rebuild", lambda: True)
     def fail():
         raise OSError("offline")
     monkeypatch.setattr(geo, "build", fail)
@@ -56,10 +58,13 @@ def test_failed_rebuild_falls_back(monkeypatch, tmp_path):
     assert geo.table_info()["loaded_from"]["how"] == "stale cache"
 
 
-def test_no_cache_and_no_rebuild_uses_snapshot(monkeypatch, tmp_path):
+def test_without_the_geo_extra_the_snapshot_is_used_quietly(monkeypatch, tmp_path):
+    import warnings
     _use_cache(monkeypatch, tmp_path, None)
-    monkeypatch.setattr(geo, "build", lambda: (_ for _ in ()).throw(ImportError("no geopandas")))
-    with pytest.warns(UserWarning):
+    monkeypatch.setattr(geo, "_can_rebuild", lambda: False)
+    monkeypatch.setattr(geo, "build", lambda: pytest.fail("should not try to rebuild"))
+    with warnings.catch_warnings():
+        warnings.simplefilter("error")
         assert geo.lookup("FI")["name"] == "Finland"
     assert geo.table_info()["loaded_from"]["how"] == "snapshot"
 

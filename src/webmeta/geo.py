@@ -15,6 +15,8 @@ borders can follow the sources without a new webmeta release:
 3. Otherwise it is rebuilt from the sources, which needs the ``geo`` extra
    (geopandas) and network access, and cached.
 4. If that is not possible: the stale cache, or the snapshot shipped with webmeta.
+   Without the ``geo`` extra this happens quietly, as the normal case; a rebuild
+   that fails (e.g. offline) gives one plain-language warning.
 
 Every exported dataset records which table it used (``table_info()``).
 
@@ -106,7 +108,8 @@ def _load(refresh):
     fresh = cached.exists() and _age_days(_read(cached, "cache")) < MAX_AGE_DAYS
     if fresh and refresh != "force":
         return _read(cached, "cache")
-    if refresh in ("auto", "force"):
+    problem = None
+    if refresh == "force" or (refresh == "auto" and _can_rebuild()):
         try:
             t = build()
             cached.parent.mkdir(parents=True, exist_ok=True)
@@ -114,14 +117,23 @@ def _load(refresh):
             tmp.write_text(json.dumps(t, ensure_ascii=False, indent=1), encoding="utf-8")
             os.replace(tmp, cached)
             return _read(cached, "rebuilt")
-        except Exception as e:    # no geopandas, no network, a source changed shape
+        except Exception as e:    # no network, a source changed shape
             if refresh == "force":
                 raise
-            warnings.warn(f"webmeta: could not rebuild the country table ({e}); "
-                          "using the cached or shipped copy", stacklevel=3)
-    if cached.exists():
-        return _read(cached, "stale cache")
-    return _read(SNAPSHOT, "snapshot")
+            problem = e
+    t = _read(cached, "stale cache") if cached.exists() else _read(SNAPSHOT, "snapshot")
+    if problem is not None:
+        # Plain words: this is shown to notebook users, and nothing is broken.
+        warnings.warn(f"webmeta could not update its country table just now ({type(problem).__name__}), "
+                      f"so it uses its copy from {t['built'][:10]}. Countries and regions work as usual.",
+                      stacklevel=3)
+    return t
+
+
+def _can_rebuild():
+    """Rebuilding needs the geo extra; without it, the shipped or cached copy is simply used."""
+    import importlib.util
+    return importlib.util.find_spec("geopandas") is not None
 
 
 def _read(path, how):
