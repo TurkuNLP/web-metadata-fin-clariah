@@ -1,49 +1,49 @@
-<!--
-  DRAFT. The top half of this file is the FIN-CLARIAH deliverable report, in the
-  shape of the 2025 D3.3.3 README (fields from the coordinators' template).
-  The description (max. 3000 characters) is also emailed as a Word document.
-  Open items are marked TODO.
--->
-
-# D3.3.3 (a) Analysis tools for providing metadata for web data: language, country and register
+# D3.3.3 (a): Analysis tools for providing metadata for web data: language, country and register
 
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/TurkuNLP/web-metadata-fin-clariah/blob/main/notebooks/webmeta_demo.ipynb)
 
 **Project:** [FIN-CLARIAH](https://www.kielipankki.fi/organization/fin-clariah/)  
-**Grant agreement:** Research Council of Finland no. 358720  
-**Start date:** TODO (the 2025 template says 01-01-2024; check the current phase)  
-**Duration:** TODO
+**Grant agreement:** Research Council of Finland no. 367751  
+**Start date:** 01-01-2026  
+**Duration:** 24 months
 
-**W3.3:** Report on analysis tools for providing metadata for web data: language, country and register  
-**Date of reporting:** TODO (due 02-11-2026)
+**WP 3.3:** Report on analysis tools for providing metadata for web data: language, country and register  
+**Date of reporting:** 02-11-2026
 
-**Report authors:** TODO  
-**Contributors:** TODO  
+**Report authors:** Tuomas Lundberg, Erik Henriksson, Tuukka Törö, Veronika Laippala (TurkuNLP, University of Turku)  
+**Contributors:** –  
 **Deliverable location:**
 
 * Code repository: https://github.com/TurkuNLP/web-metadata-fin-clariah
 * Demonstration: [Google Colab notebook](https://colab.research.google.com/github/TurkuNLP/web-metadata-fin-clariah/blob/main/notebooks/webmeta_demo.ipynb)
-* Demo data: TODO (multilingual HPLT 4 sample on Hugging Face)
+* Demo data: Finnish and Swedish HPLT 4.0 sample, https://huggingface.co/datasets/TurkuNLP/webmeta-demo-fi-sv
 
-**Keywords:** web data; metadata; language identification; country; web registers; HPLT
+**Keywords for the deliverable page:** web data; metadata; language identification; multilingual documents; country; web registers; HPLT; SSH research
 
 **Description**
 
-<!-- TODO: draft text, not yet reviewed. Keep within 3000 characters. -->
+Web-crawled corpora are among the largest text resources for research in the social sciences and humanities (SSH). For example, the newest HPLT version, HPLT 4.0, was built from over 10 petabytes of web archives, and its cleaned release holds 18.8 billion documents in 194 languages. When dealing with a corpus of these proportions, it’s hard to find the material a research question needs.
 
-Web-crawled datasets are among the largest text resources available to SSH research, but they are noisy and carry little metadata, which makes it hard to find the material a research question needs.
+In this deliverable we publish **webmeta**, an open-source Python package that turns a large web corpus into research datasets. A researcher describes the subsample they need by its metadata: how many to draw, which documents qualify, and how to stratify. webmeta then builds that subsample reproducibly, essentially reducing each study dataset to a set of settings. This enables a single corpus to serve many projects without writing new sampling and filtering code each time.
 
-*webmeta* turns a large web corpus into research datasets. It reads corpus metadata (register labels, language, country) and lets a researcher describe the subsample they want: which documents qualify, how to stratify, how large a subsample. The package then produces that subsample reproducibly. This makes each study just a set of settings for the tool, so a single corpus can serve many research projects without new code.
+* **Language.** The main language of each document and the languages of its segments, so multilingual documents can be selected or excluded.
+* **Register.** 25 web registers, such as news reports, recipes and opinion blogs, from a multilabel classifier with per-language thresholds. Documents that mix registers, as most web documents do (Henriksson et al. 2026b), can be selected as hybrids.
+* **Country.** A country and UN region from the document’s web address. This is a proxy: where a domain such as .fi points to a country, generic domains such as .com have no such information, and furthermore, some country codes are sold and used worldwide.
 
-* **Language:** documents are selected by their main language, and multilingual documents can be targeted using segment-level language identification.
-* **Country:** a country signal is derived from the document's top-level domain, so that, for example, Swedish written in Finland can be separated from Swedish written in Sweden.
-* **Register:** documents are selected by the 25-class web register taxonomy of Skantsi and Laippala (2023), including hybrid documents that combine registers.
+HPLT 4.0 carries language identification and, for 92 languages, register labels from the TurkuNLP multilingual register classifier (Henriksson et al. 2026a). webmeta reads HPLT 4.0 samples drawn by TurkuNLP’s HPLT sampler, or a user’s own corpus, and exports each dataset along with a summary table and a record of the settings used in creating the dataset.
 
-The repository is a Python package, `webmeta`, used in three ways. On LUMI, it runs from the command line as batch jobs over large corpus samples. The Colab demo notebook in the repo can be used standalone, where the package is installed straight from the repository and runs end to end on a small demo dataset. The package can also be imported by a researcher's own study code. It reads two kinds of input: validated HPLT 4 samples drawn by TurkuNLP's HPLT sampler, or a user's own corpus in CSV or JSONL, with its fields mapped onto field names used by the package. HPLT 4 documents already carry language identification and register probabilities for 92 languages. This README doubles as the report for Fin-CLARIAH deliverable D3.3.3 (a).
+The first version of webmeta supports corpus-scale runs on the LUMI supercomputer, and additionally it can be used on one’s own computer as a plain Python package. In the companion Google Colab demo notebook, users can upload their own corpus or explore a Finnish and Swedish demo sample without writing their own code. The package is already used by TurkuNLP for building datasets for corpus linguistics. Licenses are Apache 2.0 for code, and CC0 for the demo data.
 
-TODO: references; links; events (FIN-CLARIAH meeting poster, 9 Nov 2026).
+The deliverable acts as groundwork for the social media datasets of D3.3.3 (b) and the corpus analysis tools of D3.3.3 (c).
 
-*FIN-CLARIAH project has received funding from the European Union – NextGenerationEU instrument and is funded by the Research Council of Finland under grant number 358720.*
+**References**
+
+Henriksson, E., A. Myntti, S. Hellström, A. Eskelinen, S. Erten-Johansson, and V. Laippala. 2026a. “Automatic register identification for the open web using multilingual deep learning.” [arXiv:2406.19892](https://arxiv.org/abs/2406.19892).  
+Henriksson, E., A. Razzaghi, T. Lundberg, A. Kanner, and V. Laippala. 2026b. “Register Mixing Is the Norm on the Web.” Proceedings of NLP4DH 2026, 138–149. [doi:10.18653/v1/2026.nlp4dh-1.14](https://doi.org/10.18653/v1/2026.nlp4dh-1.14)  
+HPLT 4.0: https://hplt-project.org/datasets/v4.0  
+HPLT sampler: https://github.com/TurkuNLP/hplt-sampler
+
+*FIN-CLARIAH project has received funding from the European Union – NextGenerationEU instrument and is funded by the Research Council of Finland under grant number 367751.*
 
 ![](NextGenerationEU.jpg)
 
