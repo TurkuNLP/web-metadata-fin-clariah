@@ -24,7 +24,7 @@
 
 Web-crawled corpora are among the largest text resources for research in the social sciences and humanities (SSH). For example, the newest HPLT version, HPLT 4.0, was built from over 10 petabytes of web archives, and its cleaned release holds 18.8 billion documents in 194 languages. When dealing with a corpus of these proportions, it’s hard to find the material a research question needs.
 
-In this deliverable we publish **webmeta**, an open-source Python package that turns a large web corpus into research datasets. A researcher describes the subsample they need by its metadata: how many to draw, which documents qualify, and how to stratify. webmeta then builds that subsample reproducibly, essentially reducing each study dataset to a set of settings. This enables a single corpus to serve many projects without writing new sampling and filtering code each time.
+In this deliverable we publish **webmeta**, an open-source Python package that turns a large web corpus into research datasets. A researcher describes the subsample they need by its metadata: how many to draw, which documents qualify, and how to stratify. Webmeta then builds that subsample reproducibly, essentially reducing each study dataset to a set of settings. This enables a single corpus to serve many projects without writing new sampling and filtering code each time.
 
 * **Language.** The main language of each document and the languages of its segments, so multilingual documents can be selected or excluded.
 * **Register.** 25 web registers, such as news reports, recipes and opinion blogs, from a multilabel classifier with per-language thresholds. Documents that mix registers, as most web documents do (Henriksson et al. 2026b), can be selected as hybrids.
@@ -38,7 +38,7 @@ The deliverable acts as groundwork for the social media datasets of D3.3.3 (b) a
 
 **References**
 
-Henriksson, E., A. Myntti, S. Hellström, A. Eskelinen, S. Erten-Johansson, and V. Laippala. 2026a. “Automatic register identification for the open web using multilingual deep learning.” [arXiv:2406.19892](https://arxiv.org/abs/2406.19892).  
+Henriksson, E., A. Myntti, S. Hellström, A. Eskelinen, S. Erten-Johansson, and V. Laippala. 2026a. “Automatic register identification for the open web using multilingual deep learning.” *Natural Language Processing* (accepted). [arXiv:2406.19892](https://arxiv.org/abs/2406.19892).  
 Henriksson, E., A. Razzaghi, T. Lundberg, A. Kanner, and V. Laippala. 2026b. “Register Mixing Is the Norm on the Web.” Proceedings of NLP4DH 2026, 138–149. [doi:10.18653/v1/2026.nlp4dh-1.14](https://doi.org/10.18653/v1/2026.nlp4dh-1.14)  
 HPLT 4.0: https://hplt-project.org/datasets/v4.0  
 HPLT sampler: https://github.com/TurkuNLP/hplt-sampler
