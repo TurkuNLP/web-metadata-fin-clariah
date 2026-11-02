@@ -3,6 +3,7 @@ import contextlib
 import io
 import json
 import os
+import zipfile
 from pathlib import Path
 
 import pytest
@@ -34,7 +35,9 @@ def test_notebook_runs(tmp_path, source, fmt):
         os.chdir(cwd)
     assert len(g["sample"]) > 0
     assert (work / "webmeta_dataset" / "cells.tsv").exists()
-    assert (work / "webmeta_dataset.zip").exists()
+    # Unzipping the download gives one folder, not loose files.
+    with zipfile.ZipFile(work / "webmeta_dataset.zip") as z:
+        assert z.namelist() and all(n.startswith("webmeta_dataset/") for n in z.namelist())
 
 
 def test_settings_record_names_the_adapter_used(tmp_path):

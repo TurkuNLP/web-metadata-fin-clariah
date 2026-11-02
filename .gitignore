@@ -5,7 +5,7 @@ __pycache__/
 build/
 dist/
 out/
-notebooks/webmeta_dataset/
+notebooks/webmeta_dataset*/
 notebooks/webmeta_dataset.zip
 .ipynb_checkpoints/
 samples/
