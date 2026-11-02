@@ -52,7 +52,7 @@ HPLT sampler: https://github.com/TurkuNLP/hplt-sampler
 ## Using webmeta
 
 ### In Colab
-Open [`notebooks/webmeta_demo.ipynb`](notebooks/webmeta_demo.ipynb) in Colab and run all cells: choose the data, filter it, draw a sample with so many documents per cell, and download it.
+Open [`notebooks/webmeta_demo.ipynb`](notebooks/webmeta_demo.ipynb) in Colab and run all cells: choose the data, filter it, draw a sample with the desired amout of documents per cell, and download it.
 
 ### In Python
 ```bash
@@ -92,7 +92,7 @@ Every kept document gets a `meta` field with what webmeta derived; source fields
 
 ## Country and region
 
-The country comes from the URL: its top-level domain, if that is a country code (`yle.fi` → `FI`, `bbc.co.uk` → `GB`). Generic domains (`.com`, `.org`, …) give no country. The country is a signal, not a ground truth: a `.fi` site is usually Finnish, a `.com` site could be anywhere.
+The country comes from the URL: its top-level domain, if that is a country code (`yle.fi` → `FI`, `bbc.co.uk` → `GB`). Generic domains (`.com`, `.org`, …) give no country. The country is a signal rather than a ground truth: a `.fi` site is usually Finnish, a `.com` site could be anywhere.
 
 **Country codes used worldwide.** Some country codes are sold as generic domains: a `.tv` site says little about Tuvalu. Which codes are used that way is measured from corpus counts, not listed by hand. Each code is one of two kinds:
 
