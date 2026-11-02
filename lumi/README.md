@@ -1,6 +1,6 @@
 # Running webmeta on LUMI
 
-To avoid implementing two pipelines doing the same job, `webmeta` works on samples, not raw HPLT 4. For obtaining a HPLT sample, using `hplt-sampler` is recommended. It draws samples by corpus structure (language, quality level, source shard), validates them, and publishes them to the LUMI-O bucket `lumi-462001491-private:hplt-samples` without overwrites. Layout: `<corpus>/<lang>/<wds>-n<N>-s<seed>/` with `samples.jsonl.zst`, the run record and `SHA256SUMS`. `webmeta` handles labels, content filters and counts.
+To avoid implementing two pipelines doing the same job, `webmeta` works on samples, not raw HPLT 4. For obtaining a HPLT sample, using [`hplt-sampler`](https://github.com/TurkuNLP/hplt-sampler) is recommended. It draws samples by corpus structure (language, quality level, source shard), validates them, and publishes them to the LUMI-O bucket `lumi-462001491-private:hplt-samples` without overwrites. Layout: `<corpus>/<lang>/<wds>-n<N>-s<seed>/` with `samples.jsonl.zst`, the run record and `SHA256SUMS`. `webmeta` handles labels, content filters and counts.
 
 ## Setup (once per clone)
 ```bash

@@ -73,7 +73,7 @@ webmeta run shard.jsonl.zst -o out.jsonl --lang swe --country FI --register NA
 webmeta count shard.jsonl.zst --by lang,registers         # counts as TSV
 webmeta build sample.jsonl.zst --settings study.py -o out/ # a dataset from a settings file
 ```
-On LUMI, webmeta runs on validated samples published by `hplt-sampler`, not on raw shards; see [`lumi/`](lumi/).
+On LUMI, webmeta runs on validated samples published by [`hplt-sampler`](https://github.com/TurkuNLP/hplt-sampler), not on raw shards; see [`lumi/`](lumi/).
 
 ### Filters
 | Option | Meaning |
